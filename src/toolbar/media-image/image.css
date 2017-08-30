@@ -1,0 +1,13 @@
+.fs-toolbar-image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.fs-toolbar-image-modal {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  background: #53a;
+}

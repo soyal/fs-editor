@@ -1,0 +1,53 @@
+.fs-editor-toolbar {
+  display: flex;
+  border-bottom: 1px solid #c7c8c8;
+  padding: 8px;
+}
+
+.fs-editor-toolbar-button {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  background: transparent;
+  border: none;
+  margin: 0;
+  outline: none;
+  width: 28px;
+  height: 24px;
+  padding: 3px 5px;
+}
+
+.fs-editor-toolbar-group {
+  display: flex;
+  padding-right: 20px;
+}
+
+.fs-editor-stroke {
+  fill: none;
+  stroke: #444;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+.fs-editor-toolbar-button.active .fs-editor-stroke, 
+.fs-editor-toolbar-button:hover .fs-editor-stroke {
+  stroke:  #06c; 
+}
+
+.fs-editor-toolbar-button.active .fs-editor-fill,
+.fs-editor-toolbar-button:hover .fs-editor-fill {
+  fill:  #06c;
+  color: #06c;
+}
+
+.fs-editor-fill {
+  fill: #444;
+}
+
+.fs-editor-thin {
+  stroke-width: 1;
+}
+
+.fs-editor-even {
+  fill-rule: evenodd;
+}

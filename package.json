@@ -1,0 +1,25 @@
+{
+  "name": "@fs/fs-editor",
+  "version": "1.0.0",
+  "description": "An editor with draft-js",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fs/noty": "^1.0.0",
+    "draft-js": "^0.10.1",
+    "noty": "^3.1.2",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  },
+  "devDependencies": {
+    "@storybook/react": "^3.2.8",
+    "@storybook/addon-actions": "^3.2.6",
+    "@storybook/addon-links": "^3.2.6"
+  }
+}
