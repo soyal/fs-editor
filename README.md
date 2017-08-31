@@ -8,7 +8,7 @@ npm run storybook
 查看 http://localhost:6006/
 
 ## props
-* className: 类名，会加到containe
+* className: 类名，会加到container
 * height: 编辑区域高度，会直接放到style.height上面，default: 300px
 * value: EditorState, 用于赋值
 * onChange: Function, (editorState) => {},回传editorState
