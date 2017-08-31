@@ -7,9 +7,10 @@ import FsEditor from '../src/index'
 const Basic = () => {
   return (
     <div>
-      <FsEditor onImageInsert={(base64, insertImage) => {
-        debugger
-      }}></FsEditor>
+      <FsEditor height="600px"
+        onImageInsert={(base64, insertImage) => {
+          insertImage(base64)
+        }}></FsEditor>
     </div>
   )
 }

@@ -18,6 +18,7 @@
 .fs-editor-container .fs-editor-content ol,
 .fs-editor-container .fs-editor-content ul {
   margin-left: 20px;
+  padding-left: 0;
 }
 
 .fs-editor-container {
