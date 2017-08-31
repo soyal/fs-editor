@@ -64,7 +64,7 @@ class Image extends Component {
     let reader = new FileReader()
     reader.addEventListener('load', (e) => {
       let result = e.target.result  //base64
-      this.context.onImageInsert(result, (url) => {
+      this.context.onImageInsert(file, result, (url) => {
         this.props.insertMediaBlock('image', url)
       })
       // this.context.onImageInsert(result, (url) => {this.props.insertMediaBlock})

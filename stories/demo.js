@@ -9,7 +9,7 @@ const Basic = () => {
     <div>
       <FsEditor height="600px"
         imageMIME={['image/png', 'image/jpeg', 'image/gif']}
-        onImageInsert={(base64, insertImage) => {
+        onImageInsert={(file, base64, insertImage) => {
           insertImage(base64)
         }}></FsEditor>
     </div>

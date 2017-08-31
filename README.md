@@ -16,6 +16,13 @@ npm run storybook
 * imageMIME: 图片支持的类型， default:['image/png', 'image/jpeg']
 * `*`onImageInsert: Function, 必传，图片插入时触发
 ```
+@param {Object} file file类型，被插入图片的file数据 
 @param {String} base64 被插入图片的base64编码
 @param {Function} insertImage 插入图片的方法, 传参为要插入的图片的url
+e.g: 
+  onImageInsert: (file, base64, insertImage) => {
+    // 通过file或者base64，将图片上传到后端，获取到url
+    // ...
+    insertImage(url)
+  }
 ```
