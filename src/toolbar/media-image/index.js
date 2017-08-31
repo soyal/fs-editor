@@ -79,12 +79,14 @@ class Image extends Component {
   }
 
   render() {
+    const imageMIME = this.context.imageMIME || MIME
+
     return (
       <div className="fs-toolbar-image-container" >
         <input type="file" 
         style={{ display: 'none' }} 
         ref={(dom) => {this.fileInput = dom}}
-        accept={MIME.join(',')}
+        accept={imageMIME.join(',')}
         onChange={this.onFileChange.bind(this)} />
         <button className="fs-editor-toolbar-button" onClick={this.buttonClickHandler.bind(this)}>
           <svg viewBox="0 0 18 18">
