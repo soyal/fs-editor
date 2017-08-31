@@ -1,11 +1,31 @@
 # 基于draft-js编写的富文本编辑器
 
-## demo
+## 查看demo
 ```
 npm install
 npm run storybook
 ```
 查看 http://localhost:6006/
+
+## 使用方式
+```javascript
+import React, {Component} from 'react'
+import FsEditor from '@fs/fs-editor'
+import '@fs/fs-editor/dist/fs-editor.css'
+
+class Demo extends Component {
+  render() {
+    return (
+      <div>
+        <FsEditor onImageInsert={(file, base64, insertImage) => {
+          // ...
+        }}></FsEditor>
+      </div>
+    )
+  }
+}
+// ...
+```
 
 ## props
 * className: 类名，会加到container
