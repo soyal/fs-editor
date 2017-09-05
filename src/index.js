@@ -6,6 +6,7 @@ import {
   RichUtils,
   AtomicBlockUtils,
 } from 'draft-js'
+import * as utils from './utils'
 
 import Media from './components/custom-block/media'
 import Toolbar from './toolbar'
@@ -206,5 +207,7 @@ class FsEditor extends React.Component {
     );
   }
 }
+
+FsEditor.utils = utils
 
 export default FsEditor

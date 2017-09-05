@@ -1,14 +1,15 @@
 /**
- * 基础示例
+ * 还原html
  */
 import React from 'react'
 import FsEditor from '../src/index'
 
 const Basic = () => {
+  const html = '<p>this is a p tag</p>'
   return (
     <div>
       <FsEditor height="600px"
-        imageMIME={['image/png', 'image/jpeg', 'image/gif']}
+        value={FsEditor.utils.convertFromHtml(html)}
         onImageInsert={(file, base64, insertImage) => {
           insertImage(base64)
         }}></FsEditor>

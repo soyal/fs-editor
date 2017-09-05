@@ -46,3 +46,21 @@ e.g:
     insertImage(url)
   }
 ```
+
+## convertFromHtml
+```javascript
+class Demo extends Component {
+  render() {
+    const html = '<p>this is a p tag</p>'
+    return (
+      <div>
+        <FsEditor height="600px"
+          value={FsEditor.utils.convertFromHtml(html)}
+          onImageInsert={(file, base64, insertImage) => {
+            insertImage(base64)
+          }}></FsEditor>
+      </div>
+    )
+  }
+}
+```
