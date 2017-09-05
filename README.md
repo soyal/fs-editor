@@ -64,3 +64,6 @@ class Demo extends Component {
   }
 }
 ```
+
+## 判断文本是否为空
+FsEditor.utils.isEmpty(editorState)
