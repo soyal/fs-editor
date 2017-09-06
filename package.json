@@ -1,6 +1,6 @@
 {
   "name": "@fs/fs-editor",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "An editor with draft-js",
   "main": "dist/fs-editor.js",
   "scripts": {
@@ -15,12 +15,11 @@
   "dependencies": {
     "@fs/noty": "^1.0.0",
     "draft-convert": "^1.4.9",
-    "draft-js": "^0.10.1",
-    "noty": "^3.1.2",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "draft-js": "^0.10.1"
   },
   "devDependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "@storybook/addon-actions": "^3.2.6",
     "@storybook/addon-links": "^3.2.6",
     "@storybook/react": "^3.2.8",
