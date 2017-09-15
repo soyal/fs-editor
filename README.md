@@ -1,6 +1,6 @@
 # 基于draft-js编写的富文本编辑器
 
-## 查看demo
+## 查看组件demo
 ```
 npm install
 npm run storybook
@@ -8,6 +8,11 @@ npm run storybook
 查看 http://localhost:6006/
 
 ## 使用方式
+安装
+```
+npm install --save @fs/fs-editor --registry=http://npm.fishsaying.com
+```
+使用
 ```javascript
 import React, {Component} from 'react'
 import FsEditor from '@fs/fs-editor'
