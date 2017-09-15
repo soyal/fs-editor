@@ -5,9 +5,20 @@
 /*设置默认样式*/
 .fs-editor-container .fs-editor-content {
   color: #333;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.5;
   font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+}
+.fs-editor-container .fs-editor-content h1, .fs-editor-container .fs-editor-content h2 {
+  margin-top: 10px;
+  font-weight: normal;
+  color: #333;
+}
+.fs-editor-container .fs-editor-content h1 {
+  font-size: 20px;
+}
+.fs-editor-container .fs-editor-content h2 {
+  font-size: 18px;
 }
 .fs-editor-container .fs-editor-content ol {
   list-style-type: decimal;
