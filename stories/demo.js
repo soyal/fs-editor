@@ -2,7 +2,7 @@
  * 基础示例
  */
 import React from 'react'
-import FsEditor from '../src/index'
+import FsEditor from '../dist/fs-editor'
 
 const Basic = () => {
   return (
