@@ -1,7 +1,7 @@
 {
   "name": "@fs/fs-editor",
-  "version": "1.0.10",
-  "description": "An editor with draft-js",
+  "version": "1.0.11",
+  "description": "基于draft-js编写的富文本编辑器",
   "main": "dist/fs-editor.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@fs/noty": "^1.0.0",
+    "@fs/noty": "^1.0.1",
     "draft-convert": "^1.4.9",
     "draft-js": "^0.10.1",
     "prop-types": "^15.5.10",
