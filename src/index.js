@@ -7,6 +7,7 @@ import {
   AtomicBlockUtils,
 } from 'draft-js'
 import * as utils from './utils'
+import decorators from './decorators'
 
 import Media from './components/custom-block/media'
 import Toolbar from './toolbar'
@@ -36,6 +37,32 @@ class FsEditor extends React.Component {
     imageMIME: PropTypes.array
   }
 
+
+  constructor(props) {
+    super(props)
+
+    const defaultState = props.defaultValue || props.value
+    let editorState
+    if (defaultState) {
+      editorState = EditorState.createWithContent(defaultState.getCurrentContent(decorators))
+    } else {
+      editorState = EditorState.createEmpty(decorators)
+    }
+    
+    this.state = {
+      editorState
+    }
+
+    this.toggleInlineStyle = this._toggleInlineStyle.bind(this)
+    this.toggleBlockType = this._toggleBlockType.bind(this)
+    this.handleKeyCommand = this._handleKeyCommand.bind(this)
+    this.insertMediaBlock = this._insertMediaBlock.bind(this)
+
+    this.onChange = this.onChange.bind(this)
+
+  }
+
+
   getChildContext() {
     return {
       onImageInsert: this.props.onImageInsert,
@@ -50,22 +77,6 @@ class FsEditor extends React.Component {
         editorState: nextProps.value
       })
     }
-  }
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      editorState: props.defaultValue || props.value || EditorState.createEmpty()
-    }
-
-    this.toggleInlineStyle = this._toggleInlineStyle.bind(this)
-    this.toggleBlockType = this._toggleBlockType.bind(this)
-    this.handleKeyCommand = this._handleKeyCommand.bind(this)
-    this.insertMediaBlock = this._insertMediaBlock.bind(this)
-
-    this.onChange = this.onChange.bind(this)
-
   }
 
   onChange(editorState, cb) {

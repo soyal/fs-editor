@@ -67,12 +67,6 @@ class Image extends Component {
       this.context.onImageInsert(file, result, (url) => {
         this.props.insertMediaBlock('image', url)
       })
-      // this.context.onImageInsert(result, (url) => {this.props.insertMediaBlock})
-      // uploadBase64(result).then((data) => {
-      //   let url = data.data.imageUrl
-
-      //   this.props.insertMediaBlock('image', url)
-      // })
     })
 
     reader.readAsDataURL(file)

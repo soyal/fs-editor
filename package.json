@@ -15,7 +15,9 @@
   "dependencies": {
     "@fs/noty": "^1.0.0",
     "draft-convert": "^1.4.9",
-    "draft-js": "^0.10.1",
+    "draft-js": "^0.10.1"
+  },
+  "peerDependencies": {
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
