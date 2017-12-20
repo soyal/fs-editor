@@ -5,9 +5,8 @@ function handleImageUrl(contentBlock, cb, contentState) {
 }
 
 function findImageUrl(contentBlock, cb) {
-  const pattern = /https?:\/\//
-  const text = contentBlock.getText()
-  debugger
+  const pattern = /^https?:\/\/(?:\S*)$/
+  // const text = contentBlock.getText()
 }
 
 export default {

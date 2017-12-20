@@ -7,7 +7,9 @@ import {
   AtomicBlockUtils,
 } from 'draft-js'
 import * as utils from './utils'
-import decorators from './decorators'
+import uploadImage from './utils/upload/upload-image'
+import { isImage } from './utils/common'
+// import decorators from './decorators'
 
 import Media from './components/custom-block/media'
 import Toolbar from './toolbar'
@@ -44,11 +46,11 @@ class FsEditor extends React.Component {
     const defaultState = props.defaultValue || props.value
     let editorState
     if (defaultState) {
-      editorState = EditorState.createWithContent(defaultState.getCurrentContent(decorators))
+      editorState = EditorState.createWithContent(defaultState.getCurrentContent())
     } else {
-      editorState = EditorState.createEmpty(decorators)
+      editorState = EditorState.createEmpty()
     }
-    
+
     this.state = {
       editorState
     }
@@ -194,6 +196,22 @@ class FsEditor extends React.Component {
     this.onChange(newState, this._focus.bind(this))
   }
 
+  onFilePasted = (files) => {
+    files.forEach((file) => {
+      if (isImage(file)) {
+        uploadImage(file, this.props.onImageInsert, (url) => {
+          this.insertMediaBlock('image', url)
+        })
+      }
+    })
+
+    return 'handled'
+  }
+
+  onTextPasted = () => {
+
+  }
+
   render() {
     return (
       <div className={'fs-editor-container ' + (this.props.className || '')}>
@@ -211,6 +229,7 @@ class FsEditor extends React.Component {
             handleKeyCommand={this.handleKeyCommand}
             onChange={this.onChange}
             blockRendererFn={this._mediaBlockRendererFn}
+            handlePastedFiles={this.onFilePasted}
             ref="editor" />
         </div>
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-// import { uploadBase64 } from 'api/content-create/common'
 import noty from '@fs/noty'
+import uploadImage from '../../utils/upload/upload-image'
 // import Modal from './modal'
 
 import './image.css'
@@ -45,31 +45,12 @@ class Image extends Component {
     const mimeArr = this.context.imageMIME || MIME
     const limitSize = this.context.imageSizeLimit || LIMIT_SIZE
 
-    let isAllowed = mimeArr.some((mime) => {
-      return mime === file.type
+    uploadImage(file, this.context.onImageInsert, (url) => {
+      this.props.insertMediaBlock('image', url)
+    }, {
+      imageMIME: mimeArr,
+      imageSizeLimit: limitSize
     })
-
-    if (!isAllowed) {
-      noty.warning('不允许的文件类型！')
-      return false
-    }
-
-    // 验证上传的图片是否在大小限制内
-    if(file.size > limitSize) {
-      noty.warning(`图片大小超过限制，请上传${parseInt(limitSize/(1024*1024))}M以内的图片`)
-      return false
-    }
-
-    // 转为base64用于预览并上传
-    let reader = new FileReader()
-    reader.addEventListener('load', (e) => {
-      let result = e.target.result  //base64
-      this.context.onImageInsert(file, result, (url) => {
-        this.props.insertMediaBlock('image', url)
-      })
-    })
-
-    reader.readAsDataURL(file)
   }
 
   render() {

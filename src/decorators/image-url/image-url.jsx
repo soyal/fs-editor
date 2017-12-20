@@ -3,7 +3,7 @@ import React from 'react'
 const ImageUrl = (props) => {
   debugger
   return (
-    <div>111222333</div>
+    <div>图片上传中2333</div>
   )
 }
 
