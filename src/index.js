@@ -9,12 +9,13 @@ import {
 import * as utils from './utils'
 import uploadImage from './utils/upload/upload-image'
 import { isImage } from './utils/common'
-// import decorators from './decorators'
+import decorators from './decorators'
 
 import Media from './components/custom-block/media'
 import Toolbar from './toolbar'
 
 import './index.css'
+import { setTimeout } from 'timers';
 
 
 class FsEditor extends React.Component {
@@ -46,9 +47,9 @@ class FsEditor extends React.Component {
     const defaultState = props.defaultValue || props.value
     let editorState
     if (defaultState) {
-      editorState = EditorState.createWithContent(defaultState.getCurrentContent())
+      editorState = EditorState.createWithContent(defaultState.getCurrentContent(decorators))
     } else {
-      editorState = EditorState.createEmpty()
+      editorState = EditorState.createEmpty(decorators)
     }
 
     this.state = {
@@ -227,9 +228,6 @@ class FsEditor extends React.Component {
           <Editor
             editorState={this.state.editorState}
             handleKeyCommand={this.handleKeyCommand}
-            handlePastedText={(text, html, editorState) => {
-              // todo
-            }}
             onChange={this.onChange}
             blockRendererFn={this._mediaBlockRendererFn}
             handlePastedFiles={this.onFilePasted}
