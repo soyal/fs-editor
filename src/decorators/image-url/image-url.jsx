@@ -1,11 +1,10 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 
 class ImageHandler extends Component {
   constructor(props) {
     super(props)
 
     this.entityData = props.contentState.getEntity(props.entityKey).getData()
-    debugger
   }
 
   render() {
