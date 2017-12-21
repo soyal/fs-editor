@@ -227,6 +227,9 @@ class FsEditor extends React.Component {
           <Editor
             editorState={this.state.editorState}
             handleKeyCommand={this.handleKeyCommand}
+            handlePastedText={(text, html, editorState) => {
+              // todo
+            }}
             onChange={this.onChange}
             blockRendererFn={this._mediaBlockRendererFn}
             handlePastedFiles={this.onFilePasted}
