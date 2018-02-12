@@ -52,6 +52,11 @@ module.exports = {
             commonjs2: 'draft-convert',
             amd: 'draft-convert'
         },
+        'draft-js-export-html': {
+            commonjs: 'draft-js-export-html',
+            commonjs2: 'draft-js-export-html',
+            amd: 'draft-js-export-html'
+        },
         'react-dom': {
             commonjs: 'react-dom',
             commonjs2: 'react-dom',
