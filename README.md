@@ -1,13 +1,13 @@
-# 基于draft-js编写的富文本编辑器
+## 基于draft-js编写的富文本编辑器
 
-## 查看组件demo
+### 查看组件demo
 ```
 npm install
 npm run storybook
 ```
 查看 http://localhost:6006/
 
-## 使用方式
+### 使用方式
 安装
 ```
 npm install --save @fs/fs-editor --registry=http://npm.fishsaying.com
@@ -31,7 +31,7 @@ class Demo extends Component {
 // ...
 ```
 
-## props
+### props
 * className: 类名，会加到container
 * height: 编辑区域高度，会直接放到style.height上面，default: 300px
 * value: EditorState, 用于赋值
@@ -50,15 +50,15 @@ e.g:
     insertImage(url)
   }
 ```
-## utils工具函数
+### utils工具函数
 调用方式
 ```javascript
 import FsEditor from '@fs/fs-editor'
 //...
 FsEditor.utils.isEmpty(editor)
 ```
-### isEmpty: editorState => Boolean 判断editorState是否为空
-### convertFromHtml: 将html转换为editorState
+* isEmpty: editorState => Boolean 判断editorState是否为空
+* convertFromHtml: 将html转换为editorState
 ```javascript
 class Demo extends Component {
   render() {
@@ -76,6 +76,6 @@ class Demo extends Component {
 }
 ```
 
-### stateToHtml: editorState => String 将editorState转换为html字符串
-### stateToText: editorState => String 将editorState转换成纯文本
+* stateToHtml: editorState => String 将editorState转换为html字符串
+* stateToText: editorState => String 将editorState转换成纯文本
 
