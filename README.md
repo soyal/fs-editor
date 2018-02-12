@@ -16,7 +16,6 @@ npm install --save @fs/fs-editor --registry=http://npm.fishsaying.com
 ```javascript
 import React, {Component} from 'react'
 import FsEditor from '@fs/fs-editor'
-import '@fs/fs-editor/dist/fs-editor.css'
 
 class Demo extends Component {
   render() {

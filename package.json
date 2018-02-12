@@ -1,6 +1,6 @@
 {
   "name": "@fs/fs-editor",
-  "version": "1.0.7",
+  "version": "1.0.10",
   "description": "An editor with draft-js",
   "main": "dist/fs-editor.js",
   "scripts": {
@@ -16,16 +16,23 @@
     "@fs/noty": "^1.0.0",
     "draft-convert": "^1.4.9",
     "draft-js": "^0.10.1",
-    "draft-js-export-html": "^1.2.0"
+    "draft-js-export-html": "^1.2.0",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   },
   "devDependencies": {
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
     "@storybook/addon-actions": "^3.2.6",
     "@storybook/addon-links": "^3.2.6",
     "@storybook/react": "^3.2.8",
+    "autoprefixer": "^7.1.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-latest": "^6.24.1",
-    "extract-text-webpack-plugin": "^3.0.0"
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.5",
+    "postcss-flexbugs-fixes": "^3.2.0",
+    "style-loader": "^0.18.2"
   }
 }
