@@ -50,8 +50,15 @@ e.g:
     insertImage(url)
   }
 ```
-
-## convertFromHtml
+## utils工具函数
+调用方式
+```javascript
+import FsEditor from '@fs/fs-editor'
+//...
+FsEditor.utils.isEmpty(editor)
+```
+### isEmpty: editorState => Boolean 判断editorState是否为空
+### convertFromHtml: 将html转换为editorState
 ```javascript
 class Demo extends Component {
   render() {
@@ -69,5 +76,6 @@ class Demo extends Component {
 }
 ```
 
-## 判断文本是否为空
-FsEditor.utils.isEmpty(editorState)
+### stateToHtml: editorState => String 将editorState转换为html字符串
+### stateToText: editorState => String 将editorState转换成纯文本
+
