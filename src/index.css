@@ -20,10 +20,10 @@
 .fs-editor-container .fs-editor-content h2 {
   font-size: 18px;
 }
-.fs-editor-container .fs-editor-content ol {
+.fs-editor-container .fs-editor-content ol > li {
   list-style-type: decimal!important;
 }
-.fs-editor-container .fs-editor-content ul {
+.fs-editor-container .fs-editor-content ul > li {
   list-style-type: disc!important;
 }
 .fs-editor-container .fs-editor-content ol,

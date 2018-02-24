@@ -4,6 +4,8 @@
 import React from 'react'
 import FsEditor from '../src/index'
 
+import './demo.css'
+
 const Basic = () => {
   return (
     <div>
