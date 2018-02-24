@@ -1,6 +1,6 @@
 {
   "name": "@fs/fs-editor",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "An editor with draft-js",
   "main": "dist/fs-editor.js",
   "scripts": {
@@ -17,7 +17,9 @@
     "draft-convert": "^1.4.9",
     "draft-js": "^0.10.1",
     "draft-js-export-html": "^1.2.0",
-    "prop-types": "^15.5.10",
+    "prop-types": "^15.5.10"
+  },
+  "peerDependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   },

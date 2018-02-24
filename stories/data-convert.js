@@ -2,7 +2,7 @@
  * 数据转换示例
  */
 import React, { Component } from 'react'
-import FsEditor from '../src/index'
+import FsEditor from '../dist/fs-editor'
 
 class DataConvert extends Component {
   state = {

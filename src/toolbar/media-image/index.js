@@ -87,6 +87,7 @@ class Image extends Component {
         style={{ display: 'none' }} 
         ref={(dom) => {this.fileInput = dom}}
         accept={imageMIME.join(',')}
+        key={Math.random()}
         onChange={this.onFileChange.bind(this)} />
         <button className="fs-editor-toolbar-button" onClick={this.buttonClickHandler.bind(this)}>
           <svg viewBox="0 0 18 18">
