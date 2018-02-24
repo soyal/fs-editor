@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import noty from '@fs/noty'
 import uploadImage from '../../utils/upload/upload-image'
 // import Modal from './modal'
 

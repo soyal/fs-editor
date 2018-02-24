@@ -38,44 +38,69 @@ class Demo extends Component {
 * onChange: Function, (editorState) => {},回传editorState
 * imageSizeLimit: 图片大小限制，单位是Byte，如10M = 1024 * 1024 *10，默认为10M
 * imageMIME: 图片支持的类型， default:['image/png', 'image/jpeg']
+* onImagePaste: Function, 在图文混合粘贴时触发
 * `*`onImageInsert: Function, 必传，图片插入时触发
-```
-@param {Object} file file类型，被插入图片的file数据 
-@param {String} base64 被插入图片的base64编码
-@param {Function} insertImage 插入图片的方法, 传参为要插入的图片的url
-e.g: 
-  onImageInsert: (file, base64, insertImage) => {
-    // 通过file或者base64，将图片上传到后端，获取到url
-    // ...
-    insertImage(url)
-  }
-```
-### utils工具函数
-调用方式
-```javascript
-import FsEditor from '@fs/fs-editor'
-//...
-FsEditor.utils.isEmpty(editor)
-```
-* isEmpty: editorState => Boolean 判断editorState是否为空
-* convertFromHtml: 将html转换为editorState
+
+### 图片处理
+#### onImageInsert: (file:File, base64:string, insertImage: function): void
+* file: file类型，被插入图片的file数据 
+* base64: string, 被插入图片的base64编码
+* insertImage: function, (url: string): void，插入图片的方法，参数为图片url
+
+该回调会在单图粘贴或点击工具栏进行图片插入时触发  
 ```javascript
 class Demo extends Component {
   render() {
-    const html = '<p>this is a p tag</p>'
     return (
       <div>
-        <FsEditor height="600px"
-          value={FsEditor.utils.convertFromHtml(html)}
-          onImageInsert={(file, base64, insertImage) => {
-            insertImage(base64)
-          }}></FsEditor>
+        <FsEditor onImageInsert={(file, base64, insertImage) => {
+          const url = doUpload(file)
+          // 通过file上传图片获取url
+          insertImage(url)
+        }}></FsEditor>
       </div>
     )
   }
 }
 ```
+#### onImagePaste: (url: string): Promise
+* url: string, 被贴入的图片的url
+* return: Promise, 需要将处理结果通过resolve(data)返回给editor，data格式为{success: boolean, result: 处理后的图片url}
+该回调会在图文混合粘贴的时候触发
+```javascript
+class Demo extends Component {
+  render() {
+    return (
+      <div>
+        <FsEditor
+          //...
+          onImagePaste={url => {
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve({
+                  result: '//image-cdn.fishsaying.com/29b95c6cf1b04c9d9932093c6bd6544f.jpg@310w_240h',
+                  success: true
+                })
+              }, 1000)
+            })
+          }}
+        />
+      </div>
+    )
+  }
+}
 
-* stateToHtml: editorState => String 将editorState转换为html字符串
-* stateToText: editorState => String 将editorState转换成纯文本
+```
+
+### utils工具函数
+所有的工具函数会以静态方法的方式挂载在FsEditor.utils命名空间上, 如`isEmpty`的调用
+```javascript
+import FsEditor from '@fs/fs-editor'
+//调用方式
+FsEditor.utils.isEmpty(editor)
+```
+* isEmpty: (editorState: EditorState): boolean, 判断editorState是否为空
+* convertFromHtml: (html: string): EditorState, 将html转换为editorState
+* stateToHtml: (editorState: EditorState): string, 将editorState转换为html字符串
+* stateToText: (editorState: EditorState): string, 将editorState转换成纯文本
 

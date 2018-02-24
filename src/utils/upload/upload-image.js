@@ -9,7 +9,7 @@ import noty from '@fs/noty'
  * @param {Function} insertFn 图片的插入函数, (url: String): void
  * @param {Object} option  对图片大小和类型的限制{ imageMIME: Array<String>, imageSizeLimit: Number }
  * {
- *   limageMIME: 图片mime类型，i.e ['image/png', 'image/jpeg']
+ *   imageMIME: 图片mime类型，i.e ['image/png', 'image/jpeg']
  *   imageSizeLimit: 大小限制，单位是byte  1024 byte = 1kb
  * }
  */
@@ -31,7 +31,7 @@ export default (file, uploadFn, insertFn,option = {}) => {
 
   // 验证上传的图片是否在大小限制内
   if (file.size > limitSize) {
-    noty.warning(`图片大小超过限制，请上传${parseInt(limitSize / (1024 * 1024))}M以内的图片`)
+    noty.warning(`图片大小超过限制，请上传${parseInt(limitSize / (1024 * 1024), 10)}M以内的图片`)
     return false
   }
 

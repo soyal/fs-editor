@@ -10,7 +10,6 @@ import Media from './components/custom-block/media'
 import Toolbar from './toolbar'
 
 import './index.css'
-import { setTimeout } from 'timers';
 
 class FsEditor extends React.Component {
   static propTypes = {
@@ -23,32 +22,49 @@ class FsEditor extends React.Component {
      * @param {String} base64 被插入图片的base64编码
      * @param {Function} insertImage 插入图片的方法, 传参为要插入的图片的url
      */
-    onImageInsert: PropTypes.func.isRequired, // 插入图片的回调，(base64, insertImage(url))
+    onImageInsert: PropTypes.func.isRequired, // 插入图片的回调，(file, base64, insertImage(url))
+    // 图文混合粘贴时候，对图片的处理(url:string): Promise, url为粘贴的图片的url
+    // Promise resolve({result: 处理完成的url, success: 处理图片是否成功})
+    // 注意：如果粘贴的是本域名下的(image-cdn.fishsaying.com)图片，则不触发此回调，直接完成粘贴
+    onImagePaste: PropTypes.func,
     imageSizeLimit: PropTypes.number, // 图片大小限制，默认是10M，单位是Byte，如10M = 1024 * 1024 * 10
     imageMIME: PropTypes.array // 图片支持的类型，默认['image/png', 'image/jpeg']
   }
 
+  static defaultProps = {
+    onImagePaste: url => {
+      return {
+        result: url,
+        success: true
+      }
+    }
+  }
+
   static childContextTypes = {
     onImageInsert: PropTypes.func,
+    onImagePaste: PropTypes.func,
+    onChange: PropTypes.func,
     imageSizeLimit: PropTypes.number,
     imageMIME: PropTypes.array
   }
-
 
   constructor(props) {
     super(props)
 
     const defaultState = props.defaultValue || props.value
-    let editorState
+    let editorState = null
+
     if (defaultState) {
-      editorState = EditorState.createWithContent(defaultState.getCurrentContent(decorators))
+      editorState = EditorState.createWithContent(
+        defaultState.getCurrentContent(),
+        decorators
+      )
     } else {
       editorState = EditorState.createEmpty(decorators)
     }
 
     this.state = {
-      editorState:
-        props.defaultValue || props.value || EditorState.createEmpty()
+      editorState
     }
 
     this.toggleInlineStyle = this._toggleInlineStyle.bind(this)
@@ -59,10 +75,11 @@ class FsEditor extends React.Component {
     this.onChange = this.onChange.bind(this)
   }
 
-
   getChildContext() {
     return {
       onImageInsert: this.props.onImageInsert,
+      onImagePaste: this.props.onImagePaste,
+      onChange: this.onChange.bind(this),
       imageSizeLimit: this.props.imageSizeLimit,
       imageMIME: this.props.imageMIME
     }
@@ -76,7 +93,17 @@ class FsEditor extends React.Component {
     }
   }
 
+  /**
+   *
+   * @param {EditorState} editorState?
+   * @param {Function} cb
+   */
   onChange(editorState, cb) {
+    if (!editorState) {
+      this.props.onChange(this.state.editorState)
+      return
+    }
+
     if (cb) {
       this.setState(
         {
@@ -155,22 +182,22 @@ class FsEditor extends React.Component {
       currentContent: contentStateWithEntity
     })
 
-    this.setState(
-      {
-        editorState: AtomicBlockUtils.insertAtomicBlock(
-          newEditorState,
-          entityKey,
-          ' '
-        )
-      },
-      () => {
-        this._focus()
-      }
+    const newState = AtomicBlockUtils.insertAtomicBlock(
+      newEditorState,
+      entityKey,
+      ' '
     )
+
+    this.setState({
+      editorState: newState
+    })
+    this.onChange(newState, this._focus.bind(this))
   }
 
   _mediaBlockRendererFn(block) {
-    if (block.getType() === 'atomic') {
+    const blockType = block.getType()
+
+    if (blockType === 'atomic') {
       return {
         component: Media,
         editable: false
@@ -190,10 +217,10 @@ class FsEditor extends React.Component {
     this.onChange(newState, this._focus.bind(this))
   }
 
-  onFilePasted = (files) => {
-    files.forEach((file) => {
+  onFilePasted = files => {
+    files.forEach(file => {
       if (isImage(file)) {
-        uploadImage(file, this.props.onImageInsert, (url) => {
+        uploadImage(file, this.props.onImageInsert, url => {
           this.insertMediaBlock('image', url)
         })
       }
@@ -202,8 +229,8 @@ class FsEditor extends React.Component {
     return 'handled'
   }
 
-  onTextPasted = () => {
-
+  componentDidMount() {
+    this._focus()
   }
 
   render() {
@@ -228,7 +255,8 @@ class FsEditor extends React.Component {
             onChange={this.onChange}
             blockRendererFn={this._mediaBlockRendererFn}
             handlePastedFiles={this.onFilePasted}
-            ref="editor" />
+            ref="editor"
+          />
         </div>
       </div>
     )

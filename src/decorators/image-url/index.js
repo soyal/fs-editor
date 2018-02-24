@@ -1,4 +1,4 @@
-import ImageUrl from './image-url'
+import ImageUrl from 'components/image-upload'
 
 function handleImageUrl(contentBlock, cb, contentState) {
   findImageUrl(contentBlock, cb, contentState)

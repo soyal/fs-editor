@@ -2,7 +2,7 @@
  * 数据转换示例
  */
 import React, { Component } from 'react'
-import FsEditor from '../dist/fs-editor'
+import FsEditor from '../src/index'
 
 class DataConvert extends Component {
   state = {
@@ -37,6 +37,16 @@ class DataConvert extends Component {
           imageMIME={['image/png', 'image/jpeg', 'image/gif']}
           onImageInsert={(file, base64, insertImage) => {
             insertImage(base64)
+          }}
+          onImagePaste={url => {
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve({
+                  result: '//image-cdn.fishsaying.com/29b95c6cf1b04c9d9932093c6bd6544f.jpg@310w_240h',
+                  success: true
+                })
+              }, 1000)
+            })
           }}
           onChange={value => {
             this.setState({

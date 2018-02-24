@@ -1,6 +1,6 @@
 {
   "name": "@fs/fs-editor",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "An editor with draft-js",
   "main": "dist/fs-editor.js",
   "scripts": {
@@ -14,8 +14,9 @@
   "license": "ISC",
   "dependencies": {
     "@fs/noty": "^1.1.0",
+    "babel-runtime": "^6.26.0",
     "draft-convert": "^1.4.9",
-    "draft-js": "^0.10.1",
+    "draft-js": "^0.10.5",
     "draft-js-export-html": "^1.2.0",
     "prop-types": "^15.5.10"
   },
@@ -29,15 +30,17 @@
     "@storybook/react": "^3.2.8",
     "autoprefixer": "^7.1.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-latest": "^6.24.1",
     "css-loader": "^0.28.7",
-    "eslint": "^4.13.1",
-    "eslint-plugin-react": "^7.5.1",
+    "eslint": "^4.18.1",
+    "eslint-config-react-app": "^0.5.2",
     "eslint-plugin-react-app": "^1.0.2",
-    "extract-text-webpack-plugin": "^3.0.0",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
     "postcss-flexbugs-fixes": "^3.2.0",
+    "prettier": "^1.10.2",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "style-loader": "^0.18.2"
