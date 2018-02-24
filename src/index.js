@@ -1,11 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Editor,
-  EditorState,
-  RichUtils,
-  AtomicBlockUtils,
-} from 'draft-js'
+import { Editor, EditorState, RichUtils, AtomicBlockUtils } from 'draft-js'
 import * as utils from './utils'
 import uploadImage from './utils/upload/upload-image'
 import { isImage } from './utils/common'
@@ -17,21 +12,20 @@ import Toolbar from './toolbar'
 import './index.css'
 import { setTimeout } from 'timers';
 
-
 class FsEditor extends React.Component {
   static propTypes = {
-    className: PropTypes.string,  // 类名，会加到container上
-    height: PropTypes.string,  // 编辑器内容区域高度，默认300px
+    className: PropTypes.string, // 类名，会加到container上
+    height: PropTypes.string, // 编辑器内容区域高度，默认300px
     onChange: PropTypes.func, // (editorState) => {} 回传editorState
-    value: PropTypes.object,  // EditorState
+    value: PropTypes.object, // EditorState
     /**
      * 当图片被插入的时候触发
      * @param {String} base64 被插入图片的base64编码
      * @param {Function} insertImage 插入图片的方法, 传参为要插入的图片的url
      */
-    onImageInsert: PropTypes.func.isRequired,  // 插入图片的回调，(base64, insertImage(url))
-    imageSizeLimit: PropTypes.number,  // 图片大小限制，默认是10M，单位是Byte，如10M = 1024 * 1024 * 10
-    imageMIME: PropTypes.array  // 图片支持的类型，默认['image/png', 'image/jpeg']
+    onImageInsert: PropTypes.func.isRequired, // 插入图片的回调，(base64, insertImage(url))
+    imageSizeLimit: PropTypes.number, // 图片大小限制，默认是10M，单位是Byte，如10M = 1024 * 1024 * 10
+    imageMIME: PropTypes.array // 图片支持的类型，默认['image/png', 'image/jpeg']
   }
 
   static childContextTypes = {
@@ -53,7 +47,8 @@ class FsEditor extends React.Component {
     }
 
     this.state = {
-      editorState
+      editorState:
+        props.defaultValue || props.value || EditorState.createEmpty()
     }
 
     this.toggleInlineStyle = this._toggleInlineStyle.bind(this)
@@ -62,7 +57,6 @@ class FsEditor extends React.Component {
     this.insertMediaBlock = this._insertMediaBlock.bind(this)
 
     this.onChange = this.onChange.bind(this)
-
   }
 
 
@@ -83,11 +77,13 @@ class FsEditor extends React.Component {
   }
 
   onChange(editorState, cb) {
-
     if (cb) {
-      this.setState({
-        editorState
-      }, cb)
+      this.setState(
+        {
+          editorState
+        },
+        cb
+      )
     } else {
       this.setState({
         editorState
@@ -119,27 +115,24 @@ class FsEditor extends React.Component {
 
   /**
    * 插入块级标签
-   * @param {*} type 
+   * @param {*} type
    */
   _insertCustomBlock(type) {
     const editorState = this.state.editorState
     const contentState = editorState.getCurrentContent()
-    const contentStateWithEntity = contentState.createEntity(
-      type,
-      'IMMUTABLE'
-    )
-    const newEditorState = EditorState.set(
-      editorState,
+    const contentStateWithEntity = contentState.createEntity(type, 'IMMUTABLE')
+    const newEditorState = EditorState.set(editorState, {
+      currentContent: contentStateWithEntity
+    })
+
+    this.setState(
       {
-        currentContent: contentStateWithEntity
+        editorState: newEditorState
+      },
+      () => {
+        this._focus()
       }
     )
-
-    this.setState({
-      editorState: newEditorState
-    }, () => {
-      this._focus()
-    })
   }
 
   /**
@@ -158,22 +151,22 @@ class FsEditor extends React.Component {
       }
     )
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
-    const newEditorState = EditorState.set(
-      editorState,
+    const newEditorState = EditorState.set(editorState, {
+      currentContent: contentStateWithEntity
+    })
+
+    this.setState(
       {
-        currentContent: contentStateWithEntity
+        editorState: AtomicBlockUtils.insertAtomicBlock(
+          newEditorState,
+          entityKey,
+          ' '
+        )
+      },
+      () => {
+        this._focus()
       }
     )
-
-    this.setState({
-      editorState: AtomicBlockUtils.insertAtomicBlock(
-        newEditorState,
-        entityKey,
-        ' '
-      )
-    }, () => {
-      this._focus()
-    })
   }
 
   _mediaBlockRendererFn(block) {
@@ -216,15 +209,19 @@ class FsEditor extends React.Component {
   render() {
     return (
       <div className={'fs-editor-container ' + (this.props.className || '')}>
-        <Toolbar toggleInlineStyle={this.toggleInlineStyle}
+        <Toolbar
+          toggleInlineStyle={this.toggleInlineStyle}
           toggleBlockType={this.toggleBlockType}
           insertMediaBlock={this.insertMediaBlock}
-          insertCustomBlock={this._insertCustomBlock.bind(this)}></Toolbar>
+          insertCustomBlock={this._insertCustomBlock.bind(this)}
+        />
 
-        <div className="fs-editor-content"
+        <div
+          className="fs-editor-content"
           style={{
             height: this.props.height || '300px'
-          }}>
+          }}
+        >
           <Editor
             editorState={this.state.editorState}
             handleKeyCommand={this.handleKeyCommand}
@@ -233,9 +230,8 @@ class FsEditor extends React.Component {
             handlePastedFiles={this.onFilePasted}
             ref="editor" />
         </div>
-
       </div>
-    );
+    )
   }
 }
 

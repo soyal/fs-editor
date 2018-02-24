@@ -9,6 +9,9 @@
   line-height: 1.5;
   font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
 }
+.fs-editor-container span {
+  font-weight: inherit;
+}
 .fs-editor-container .fs-editor-content h1, .fs-editor-container .fs-editor-content h2 {
   margin-top: 10px;
   font-weight: normal;
@@ -20,11 +23,11 @@
 .fs-editor-container .fs-editor-content h2 {
   font-size: 18px;
 }
-.fs-editor-container .fs-editor-content ol {
-  list-style-type: decimal;
+.fs-editor-container .fs-editor-content ol > li {
+  list-style-type: decimal!important;
 }
-.fs-editor-container .fs-editor-content ul {
-  list-style-type: disc;
+.fs-editor-container .fs-editor-content ul > li {
+  list-style-type: disc!important;
 }
 .fs-editor-container .fs-editor-content ol,
 .fs-editor-container .fs-editor-content ul {
