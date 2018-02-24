@@ -1,3 +1,7 @@
 ul, ol, li {
   list-style: none;
 }
+
+span {
+  font-weight: normal;
+}

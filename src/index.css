@@ -9,6 +9,9 @@
   line-height: 1.5;
   font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
 }
+.fs-editor-container span {
+  font-weight: inherit;
+}
 .fs-editor-container .fs-editor-content h1, .fs-editor-container .fs-editor-content h2 {
   margin-top: 10px;
   font-weight: normal;
