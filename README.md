@@ -47,7 +47,7 @@ class Demo extends Component {
 * base64: string, 被插入图片的base64编码
 * insertImage: function, (url: string): void，插入图片的方法，参数为图片url
 
-该回调会在单图粘贴或点击工具栏进行图片插入时触发  
+该回调会在`单图粘贴`或`点击工具栏`进行图片插入时触发  
 ```javascript
 class Demo extends Component {
   render() {
@@ -66,7 +66,8 @@ class Demo extends Component {
 #### onImagePaste: (url: string): Promise
 * url: string, 被贴入的图片的url
 * return: Promise, 需要将处理结果通过resolve(data)返回给editor，data格式为{success: boolean, result: 处理后的图片url}
-该回调会在图文混合粘贴的时候触发
+
+该回调会在`图文混合粘贴`的时候触发，如果不传出此参数，则editor不会处理图文混合粘贴的情况
 ```javascript
 class Demo extends Component {
   render() {
