@@ -3,3 +3,12 @@ stories/
 .storybook/
 .vscode/
 .idea/
+src/
+.babelrc
+.eslintignore
+.eslintrc.json
+.gitignore
+.prettier.json
+.version.md
+.webpack.config.js
+yarn.lock
