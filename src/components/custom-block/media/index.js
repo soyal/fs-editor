@@ -3,13 +3,13 @@
  */
 
 import React from 'react'
-import Image from './image'
+import Image from 'components/image-upload'
 import Audio from './audio'
 import Video from './video'
 
 import './index.css'
 
-let Media = (props) => {
+const Media = (props) => {
   const key = props.block.getEntityAt(0)
   if (!key) {
     return null
@@ -22,7 +22,7 @@ let Media = (props) => {
   if (type === 'audio') {
     media = <Audio src={src} />;
   } else if (type === 'image') {
-    media = <Image src={src} />;
+    media = <Image contentState={props.contentState} entityKey={key} />;
   } else if (type === 'video') {
     media = <Video src={src} />;
   } 

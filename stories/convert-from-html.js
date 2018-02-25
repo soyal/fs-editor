@@ -2,7 +2,7 @@
  * 还原html
  */
 import React from 'react'
-import FsEditor from '../src/index'
+import FsEditor from '../dist/fs-editor'
 
 const Basic = () => {
   const html = '<p>this is a p tag</p>'

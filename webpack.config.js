@@ -53,10 +53,15 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        modules: ['node_modules', path.resolve(__dirname, './src')],
+        extensions: ['.js', '.jsx']
+    },
+
     devtool: 'source-map',
 
     externals: {
-        react: {
+        'react': {
             root: 'React',
             commonjs: 'react',
             commonjs2: 'react',

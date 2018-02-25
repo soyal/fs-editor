@@ -38,6 +38,16 @@ class DataConvert extends Component {
           onImageInsert={(file, base64, insertImage) => {
             insertImage(base64)
           }}
+          onImagePaste={url => {
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve({
+                  result: '//image-cdn.fishsaying.com/29b95c6cf1b04c9d9932093c6bd6544f.jpg@310w_240h',
+                  success: true
+                })
+              }, 1000)
+            })
+          }}
           onChange={value => {
             this.setState({
               editorState: value
