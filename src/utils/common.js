@@ -19,7 +19,7 @@ export const isImage = file => {
  */
 export const isInDomain = (url, domain) => {
   domain = domain || config.imageDomain
-  const pattern = /^https?:\/\/([^/]+)/
+  const pattern = /(?:^https?:)?\/\/([^/]+)/
   const matches = url.match(pattern)
   if (!matches) return false
 

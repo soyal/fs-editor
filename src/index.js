@@ -17,6 +17,7 @@ class FsEditor extends React.Component {
     height: PropTypes.string, // 编辑器内容区域高度，默认300px
     onChange: PropTypes.func, // (editorState) => {} 回传editorState
     value: PropTypes.object, // EditorState
+    autoFocus: PropTypes.bool, // 组件加载后自动定焦到editor
     /**
      * 当图片被插入的时候触发
      * @param {String} base64 被插入图片的base64编码
@@ -32,6 +33,7 @@ class FsEditor extends React.Component {
   }
 
   static defaultProps = {
+    autoFocus: false,
     onImagePaste: url => {
       return {
         result: url,
@@ -230,7 +232,9 @@ class FsEditor extends React.Component {
   }
 
   componentDidMount() {
-    this._focus()
+    if(this.props.autoFocus) {
+      this._focus()
+    }
   }
 
   render() {
