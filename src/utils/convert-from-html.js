@@ -6,6 +6,7 @@ import {
 import {
   convertFromHTML
 } from 'draft-convert'
+import decorators from '../decorators'
 
 
 /**
@@ -37,5 +38,5 @@ export const convertFromHtml = (html) => {
     }
   })(html)
 
-  return EditorState.createWithContent(contentState)
+  return EditorState.createWithContent(contentState, decorators)
 }
