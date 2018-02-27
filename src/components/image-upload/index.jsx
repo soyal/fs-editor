@@ -57,6 +57,10 @@ class ImageHandler extends Component {
         <img
           src={this.state.src}
           className="fs-editor-block-image"
+          tabIndex={this.entityKey}
+          onKeyUp={() => {
+            alert('key up')
+          }}
           alt={this.state.src || ''}
         />
       )
