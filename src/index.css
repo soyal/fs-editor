@@ -7,10 +7,16 @@
   color: #333;
   font-size: 14px;
   line-height: 1.5;
-  font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+  font-family: -apple-system,Arial,Microsoft YaHei,sans-serif;
 }
 .fs-editor-container span {
   font-weight: inherit;
+}
+.fs-editor-container figure {
+  margin: 0;
+}
+.fs-editor-container img {
+  margin: 15px 30px;
 }
 .fs-editor-container .fs-editor-content h1, .fs-editor-container .fs-editor-content h2 {
   margin-top: 10px;
