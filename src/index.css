@@ -18,9 +18,6 @@
 .fs-editor-container img {
   margin: 15px 30px;
 }
-.fs-editor-container img:focus {
-  border: 2px solid blue;
-}
 .fs-editor-container .fs-editor-content h1, .fs-editor-container .fs-editor-content h2 {
   margin-top: 10px;
   font-weight: normal;

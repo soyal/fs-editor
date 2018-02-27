@@ -48,7 +48,7 @@ class DataConvert extends Component {
               setTimeout(() => {
                 resolve({
                   result: url,
-                  success: true
+                  success: false
                 })
               }, 1000)
             })

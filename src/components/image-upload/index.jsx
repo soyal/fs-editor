@@ -54,15 +54,13 @@ class ImageHandler extends Component {
   getStatusTemplate(status) {
     if (status === 'success') {
       return (
-        <img
-          src={this.state.src}
-          className="fs-editor-block-image"
-          tabIndex={this.entityKey}
-          onKeyUp={() => {
-            alert('key up')
-          }}
-          alt={this.state.src || ''}
-        />
+        <figure contentEditable="false">
+          <img
+            src={this.state.src}
+            className="fs-editor-block-image"
+            alt={this.state.src || ''}
+          />
+        </figure>
       )
     } else if (status === 'uploading') {
       return (
@@ -74,7 +72,13 @@ class ImageHandler extends Component {
       )
     } else {
       return (
-        <span style={{ color: '#d0021b', fontStyle: 'italic', fontSize: '14px' }}>图片上传失败</span>
+        <figure contentEditable="false">
+          <img
+            src={config.errorImage}
+            className="fs-editor-block-image"
+            alt={this.state.src || ''}
+          />
+        </figure>
       )
     }
   }
@@ -86,23 +90,24 @@ class ImageHandler extends Component {
     const data = await this.context.onImagePaste(src) // 处理完成的url
 
     // 上传图片成功
-    if(data.success) {
+    if (data.success) {
       // 修改根状态
       this.props.contentState.replaceEntityData(this.entityKey, {
         src: data.result
       })
-  
+
       this.setState({
         src: data.result,
         status: 'success'
       })
     } else {
       this.props.contentState.replaceEntityData(this.entityKey, {
-        src: config.defaultImage
+        src: config.errorImage
       })
 
       this.setState({
-        status: 'error'
+        status: 'error',
+        src: config.errorImage
       })
     }
 
