@@ -18,7 +18,8 @@ export default (config = {}) => {
   return {
     // handle single image paste and insert image by tool click
     blockRendererFn: (block, { getEditorState }) => {
-      console.log('block render type', block.getType())
+      // console.log('block render type:', block.getType())
+      console.log('content block key:', block.getKey())
       if (block.getType() === 'atomic') {
         const key = block.getEntityAt(0)
         if (!key) {
@@ -41,11 +42,11 @@ export default (config = {}) => {
     },
 
     // handle text-image pasted
-    // decorators: [
-    //   {
-    //     strategy: imageUrlStrategy,
-    //     component: ImageUpload
-    //   }
-    // ]
+    decorators: [
+      {
+        strategy: imageUrlStrategy,
+        component: ImageUpload
+      }
+    ]
   }
 }

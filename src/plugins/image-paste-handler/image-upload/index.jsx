@@ -81,6 +81,7 @@ class ImageHandler extends Component {
   }
 
   async componentDidMount() {
+    console.log('offsetKey:', this.props.offsetKey)
     if (this.shouldUpload()) {
       const { src, alt } = this.getData(this.props)
       const data = await this.context.onImagePaste(src) // 处理完成的url
