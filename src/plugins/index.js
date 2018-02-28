@@ -1,3 +1,4 @@
-import createImagePasteHandler from './image-paste-handler'
+import imagePasteHandlerPlugin from './image-paste-handler'
+import imagePlugin from './image-plugin'
 
-export default [createImagePasteHandler()]
+export default [imagePlugin, imagePasteHandlerPlugin]

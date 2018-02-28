@@ -4,7 +4,7 @@ import MediaBlock from './media-block'
 /**
  * image paste handler
  */
-export default (config = {}) => {
+const createImagePasteHandler = (config = {}) => {
   return {
     blockRendererFn: block => {
       const blockType = block.getType()
@@ -25,3 +25,5 @@ export default (config = {}) => {
     ]
   }
 }
+
+export default createImagePasteHandler()

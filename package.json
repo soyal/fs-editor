@@ -18,6 +18,8 @@
     "draft-convert": "^1.4.9",
     "draft-js": "^0.10.5",
     "draft-js-export-html": "^1.2.0",
+    "draft-js-focus-plugin": "^2.0.1",
+    "draft-js-image-plugin": "^2.0.1",
     "draft-js-plugins-editor": "^2.0.4",
     "prop-types": "^15.5.10"
   },
