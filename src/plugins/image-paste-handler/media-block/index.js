@@ -4,8 +4,6 @@
 
 import React from 'react'
 import Image from '../image-upload'
-import Audio from './audio'
-import Video from './video'
 
 import './index.css'
 
@@ -15,16 +13,13 @@ const Media = props => {
     return null
   }
   const entity = props.contentState.getEntity(key)
-  const { src } = entity.getData()
   const type = entity.getType().toLowerCase()
   let media
 
-  if (type === 'audio') {
-    media = <Audio src={src} />
-  } else if (type === 'image') {
+  if (type === 'image') {
     media = <Image contentState={props.contentState} entityKey={key} />
-  } else if (type === 'video') {
-    media = <Video src={src} />
+  } else {
+    media = null
   }
   return media
 }
