@@ -111,6 +111,7 @@ class FsEditor extends React.Component {
    * @param {Function} cb
    */
   onChange(editorState, cb) {
+    console.log('editorState change')
     if (!editorState) {
       this.props.onChange(this.state.editorState)
       return

@@ -4,17 +4,17 @@ export default function handleImageUrl(contentBlock, cb, contentState) {
 
 /**
  * 查找插入的图片
- * @param {*} contentBlock 
- * @param {*} cb 
- * @param {*} contentState 
+ * @param {*} contentBlock
+ * @param {*} cb
+ * @param {*} contentState
  */
 function findImageUrl(contentBlock, cb, contentState) {
   contentBlock.findEntityRanges(
-    (char) => {
+    char => {
       const entityKey = char.getEntity()
-      if(entityKey) {
+      if (entityKey) {
         const entityType = contentState.getEntity(entityKey).getType()
-        
+
         return entityType === 'IMAGE'
       } else {
         return false

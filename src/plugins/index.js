@@ -1,4 +1,9 @@
-import imagePasteHandlerPlugin from './image-paste-handler'
-import imagePlugin from './image-plugin'
+import createImagePasteHandlerPlugin from './image-paste-handler'
+import { composeDecorators } from 'draft-js-plugins-editor'
+import createFocusPlugin from 'draft-js-focus-plugin'
 
-export default [imagePlugin, imagePasteHandlerPlugin]
+const focusPlugin = createFocusPlugin()
+const decorator = composeDecorators(focusPlugin.decorator)
+const imgPastePlugin = createImagePasteHandlerPlugin({ decorator })
+
+export default [focusPlugin, imgPastePlugin]
