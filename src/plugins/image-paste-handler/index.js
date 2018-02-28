@@ -43,7 +43,7 @@ export default (config = {}) => {
     decorators: [
       {
         strategy: imageUrlStrategy,
-        component: decorateComponentWithProps(ImageUpload, { ThemedImage })
+        component: ImageUpload
       }
     ]
   }

@@ -7,6 +7,7 @@ import { isInDomain } from 'utils/common'
 import PropTypes from 'prop-types'
 import config from 'config.js'
 import classnames from 'classnames'
+import { AtomicBlockUtils } from 'draft-js'
 
 class ImageHandler extends Component {
   static propTypes = {
@@ -64,7 +65,7 @@ class ImageHandler extends Component {
     return (
       <figure contentEditable="false">
         {/* <ThemedImage src={imgSrc} className={cls} alt={alt} /> */}
-        <img src={imgSrc} className={cls} alt={alt}/>
+        <img src={imgSrc} className={cls} alt={alt} />
       </figure>
     )
   }
@@ -80,28 +81,39 @@ class ImageHandler extends Component {
   }
 
   async componentDidMount() {
-    console.log(this.props.offsetKey)
-    if (this.shouldUpload()) {
-      const { src, alt } = this.getData(this.props)
-      const data = await this.context.onImagePaste(src) // 处理完成的url
+    debugger
+    // console.log(this.props.offsetKey)
+    // if (this.shouldUpload()) {
+    //   const { src, alt } = this.getData(this.props)
+    //   const data = await this.context.onImagePaste(src) // 处理完成的url
 
-      let _targetSrc,
-        success = false
+    //   let _targetSrc,
+    //     success = false
 
-      // 上传图片成功
-      if (data.success) {
-        _targetSrc = data.result
-        success = true
-      } else {
-        _targetSrc = config.errorImage
-      }
+    //   // 上传图片成功
+    //   if (data.success) {
+    //     _targetSrc = data.result
+    //     success = true
+    //   } else {
+    //     _targetSrc = config.errorImage
+    //   }
 
-      this.updateEntity({ src: _targetSrc, success, alt: alt || '' })
-    }
+    //   this.updateEntity({ src: _targetSrc, success, alt: alt || '' })
+    // }
+    const { getEditorState, entityKey, setEditorState } = this.props
+    const editorState = getEditorState()
+    const newState = AtomicBlockUtils.insertAtomicBlock(
+      editorState,
+      entityKey,
+      ' '
+    )
+
+    setEditorState(newState)
   }
 
   render() {
-    return this.getStatusTemplate(null)
+    // return this.getStatusTemplate(null)
+    return null
   }
 }
 
