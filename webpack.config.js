@@ -3,7 +3,7 @@ const path = require("path")
 const autoprefixer = require('autoprefixer')
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/index.jsx',
     output: {
         filename: 'fs-editor.js',
         publicPath: "/dist/",
