@@ -68,11 +68,13 @@ function _externals() {
         'react',
         'react-dom',
         'prop-types',
+        'classnames',
         'draft-js',
         'draft-convert',
         'draft-js-export-html',
         '@fs/noty',
-        'draft-js-plugins-editor'
+        'draft-js-plugins-editor',
+        'draft-js-focus-plugin'
     ]
 
     const result = {}

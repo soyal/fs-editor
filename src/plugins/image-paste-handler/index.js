@@ -18,8 +18,6 @@ export default (config = {}) => {
   return {
     // handle single image paste and insert image by tool click
     blockRendererFn: (block, { getEditorState }) => {
-      // console.log('block render type:', block.getType())
-      console.log('content block key:', block.getKey())
       if (block.getType() === 'atomic') {
         const key = block.getEntityAt(0)
         if (!key) {

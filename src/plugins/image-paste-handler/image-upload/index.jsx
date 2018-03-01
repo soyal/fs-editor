@@ -2,12 +2,10 @@
  * 图片上传组件
  */
 import React, { Component } from 'react'
-import { EditorState } from 'draft-js'
 import { isInDomain } from 'utils/common'
 import PropTypes from 'prop-types'
 import config from 'config.js'
-import classnames from 'classnames'
-import { AtomicBlockUtils } from 'draft-js'
+import { Modifier, SelectionState, EditorState } from 'draft-js'
 
 class ImageHandler extends Component {
   static propTypes = {
@@ -39,49 +37,54 @@ class ImageHandler extends Component {
     return entityData
   }
 
+  getBlockKey(offsetKey) {
+    const pattern = /([^-]+)-(?:[^-]+)-\w+/
+
+    return offsetKey.match(pattern)[1]
+  }
+
   /**
    * 通过图片上传状态拼接template
    * @param {String} status 图片状态 success || error || uploading
    * @param {String} className 图片类名
    */
   getStatusTemplate(className) {
-    const cls = classnames(className, 'fs-editor-block-image')
-    const { src, success, alt } = this.getData(this.props)
-    let imgSrc
+    const { success } = this.getData(this.props)
     if (success === undefined) {
       return (
         <p style={{ color: '#c7c8c9', fontStyle: 'italic', fontSize: '14px' }}>
           图片上传中...
         </p>
       )
-    } else if (success === true) {
-      imgSrc = src
-    } else {
-      imgSrc = config.errorImage
     }
 
-    // const { ThemedImage } = this.props
-
-    return (
-      <figure contentEditable="false">
-        {/* <ThemedImage src={imgSrc} className={cls} alt={alt} /> */}
-        <img src={imgSrc} className={cls} alt={alt} />
-      </figure>
-    )
+    return null
   }
 
   updateEntity(data) {
-    const nContentState = this.props
-      .getEditorState()
-      .getCurrentContent()
-      .replaceEntityData(this.props.entityKey, data)
+    // 替换entity data
+    let nContentState = this.props.contentState.replaceEntityData(
+      this.props.entityKey,
+      data
+    )
 
-    const nEditorState = EditorState.createWithContent(nContentState)
+    // 设置selection
+    const blockKey = this.getBlockKey(this.props.offsetKey)
+    console.log('blockKey: ', blockKey)
+    let nSelectionState = SelectionState.createEmpty(blockKey)
+
+    nContentState = Modifier.setBlockType(
+      nContentState,
+      nSelectionState,
+      'atomic'
+    )
+
+    let nEditorState = EditorState.createWithContent(nContentState)
+
     this.props.setEditorState(nEditorState)
   }
 
   async componentDidMount() {
-    console.log('offsetKey:', this.props.offsetKey)
     if (this.shouldUpload()) {
       const { src, alt } = this.getData(this.props)
       const data = await this.context.onImagePaste(src) // 处理完成的url
