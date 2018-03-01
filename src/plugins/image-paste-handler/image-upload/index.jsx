@@ -10,7 +10,8 @@ import { EditorState } from 'draft-js'
 class ImageHandler extends Component {
   static propTypes = {
     contentState: PropTypes.object, // draft contentState
-    entityKey: PropTypes.string
+    entityKey: PropTypes.string,
+    ImageComponent: PropTypes.any
   }
 
   static contextTypes = {
@@ -18,20 +19,34 @@ class ImageHandler extends Component {
     onChange: PropTypes.func
   }
 
-  state = {
-    status: 'uploading',
-    src: ''
+  constructor(props) {
+    super(props)
+
+    this.state = this.getInitialState(props)
+    this.id = Math.random()
+  }
+
+  getInitialState(props) {
+    const entityData = this.getData(props)
+    const state = {
+      status: 'uploading' // uploading || uploaded
+    }
+
+    if (!this.shouldUpload(entityData)) {
+      state.status = 'uploaded'
+    }
+
+    return state
   }
 
   /**
    * 如果是base64或者白名单域名，不上传
-   * @param {String} src
+   * @param {Object} data entityData
    */
   shouldUpload(data) {
-    const { src, success } = data
-    if (success !== undefined || src.startsWith('data:') || isInDomain(src))
-      return false
-
+    const { src } = data
+    if (src.startsWith('data:') || isInDomain(src)) return false
+    console.log('should upload: ', src)
     return true
   }
 
@@ -49,11 +64,10 @@ class ImageHandler extends Component {
 
   /**
    * 通过图片上传状态拼接template
-   * @param {String} status 图片状态 success || error || uploading
-   * @param {String} className 图片类名
    */
-  getStatusTemplate(className) {
-    const { status } =  this.state
+  getStatusTemplate() {
+    const { status } = this.state
+    const entityData = this.getData(this.props)
     if (status === 'uploading') {
       return (
         <p style={{ color: '#c7c8c9', fontStyle: 'italic', fontSize: '14px' }}>
@@ -64,66 +78,62 @@ class ImageHandler extends Component {
 
     return (
       <figure contentEditable="false">
-        <img src={} alt=""/>
+        <img {...entityData} role="presentation" />
       </figure>
     )
   }
 
   updateEntity(data) {
-    console.log('~~~~~~~~~block update: ', this.props.offsetKey, data)
-    // 替换entity data
-    let nContentState = this.props.contentState.mergeEntityData(
+    const nContentState = this.props.contentState.mergeEntityData(
       this.props.entityKey,
       data
     )
+    const editorState = EditorState.createWithContent(nContentState)
+    this.context.onChange(editorState)
+    // 替换entity data
+    // let nContentState = this.props.contentState.mergeEntityData(
+    //   this.props.entityKey,
+    //   data
+    // )
 
-    // 设置selection
-    const blockKey = this.getBlockKey(this.props.offsetKey)
-    let nSelectionState = SelectionState.createEmpty(blockKey)
-    // nContentState = Modifier.splitBlock(nContentState, nSelectionState)
+    // // 设置selection
+    // const blockKey = this.getBlockKey(this.props.offsetKey)
+    // let nSelectionState = SelectionState.createEmpty(blockKey)
+    // // nContentState = Modifier.splitBlock(nContentState, nSelectionState)
 
-    // 将entity apply到contentState上
-    let nEditorState = EditorState.createWithContent(nContentState)
-    nEditorState = EditorState.forceSelection(nEditorState, nSelectionState)
-    nEditorState = AtomicBlockUtils.insertAtomicBlock(
-      nEditorState,
-      this.props.entityKey,
-      ' '
-    )
+    // // 将entity apply到contentState上
+    // let nEditorState = EditorState.createWithContent(nContentState)
+    // nEditorState = EditorState.forceSelection(nEditorState, nSelectionState)
+    // nEditorState = AtomicBlockUtils.insertAtomicBlock(
+    //   nEditorState,
+    //   this.props.entityKey,
+    //   ' '
+    // )
 
-    // const nEditorState = EditorState.createWithContent(nContentState)
+    // // const nEditorState = EditorState.createWithContent(nContentState)
 
-    this.props.setEditorState(nEditorState)
+    // this.props.setEditorState(nEditorState)
   }
 
   async componentDidMount() {
-    const entityData = this.getData(this.props)
-    let _targetSrc = entityData.src,
-      alt = '',
-      success = entityData.success
-    if (this.shouldUpload(entityData)) {
-      const { src, _alt } = entityData
+    if (this.state.status === 'uploading') {
+      console.log('do upload!!!', this.id)
+      const entityData = this.getData(this.props)
+      const { src } = entityData
       const data = await this.context.onImagePaste(src) // 处理完成的url
-
-      alt = _alt || ''
       // 上传图片成功
+      let _targetSrc
       if (data.success) {
         _targetSrc = data.result
       } else {
         _targetSrc = config.errorImage
-        success = false
       }
+      this.updateEntity({ src: _targetSrc })
     }
-
-    this.updateEntity({ src: _targetSrc, success, alt: alt || '' })
   }
 
   render() {
-    return (
-      <p style={{ color: '#c7c8c9', fontStyle: 'italic', fontSize: '14px' }}>
-        图片上传中...
-      </p>
-    )
+    return this.getStatusTemplate()
   }
 }
 

@@ -12,7 +12,6 @@ function findImageUrl(contentBlock, cb, contentState) {
   const type = contentBlock.getType()
   // atomic交给blockRenderFn去处理
   if (type === 'atomic') return null
-  console.log('```````````````', type)
   contentBlock.findEntityRanges(char => {
     const entityKey = char.getEntity()
     if (entityKey) {
