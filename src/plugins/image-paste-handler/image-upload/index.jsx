@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 import { isInDomain } from 'utils/common'
 import PropTypes from 'prop-types'
 import config from 'config.js'
-import { Modifier, SelectionState, EditorState } from 'draft-js'
+import { EditorState } from 'draft-js'
 
 class ImageHandler extends Component {
   static propTypes = {
@@ -16,6 +16,11 @@ class ImageHandler extends Component {
   static contextTypes = {
     onImagePaste: PropTypes.func,
     onChange: PropTypes.func
+  }
+
+  state = {
+    status: 'uploading',
+    src: ''
   }
 
   /**
@@ -48,8 +53,8 @@ class ImageHandler extends Component {
    * @param {String} className 图片类名
    */
   getStatusTemplate(className) {
-    const { success } = this.getData(this.props)
-    if (success === undefined) {
+    const { status } =  this.state
+    if (status === 'uploading') {
       return (
         <p style={{ color: '#c7c8c9', fontStyle: 'italic', fontSize: '14px' }}>
           图片上传中...
@@ -57,41 +62,36 @@ class ImageHandler extends Component {
       )
     }
 
-    return <div />
+    return (
+      <figure contentEditable="false">
+        <img src={} alt=""/>
+      </figure>
+    )
   }
 
   updateEntity(data) {
     console.log('~~~~~~~~~block update: ', this.props.offsetKey, data)
     // 替换entity data
-    // let nContentState = this.props.contentState.mergeEntityData(
-    //   this.props.entityKey,
-    //   data
-    // )
-    // create entity
-    const contentStateWithEntity = this.props.contentState.createEntity(
-      'image',
-      'IMMUTABLE',
+    let nContentState = this.props.contentState.mergeEntityData(
+      this.props.entityKey,
       data
     )
-    const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
 
     // 设置selection
     const blockKey = this.getBlockKey(this.props.offsetKey)
     let nSelectionState = SelectionState.createEmpty(blockKey)
+    // nContentState = Modifier.splitBlock(nContentState, nSelectionState)
 
     // 将entity apply到contentState上
-    let nContentState = Modifier.setBlockType(
-      contentStateWithEntity,
-      nSelectionState,
-      'atomic'
-    )
-    nContentState = Modifier.applyEntity(
-      nContentState,
-      nSelectionState,
-      entityKey
+    let nEditorState = EditorState.createWithContent(nContentState)
+    nEditorState = EditorState.forceSelection(nEditorState, nSelectionState)
+    nEditorState = AtomicBlockUtils.insertAtomicBlock(
+      nEditorState,
+      this.props.entityKey,
+      ' '
     )
 
-    const nEditorState = EditorState.createWithContent(nContentState)
+    // const nEditorState = EditorState.createWithContent(nContentState)
 
     this.props.setEditorState(nEditorState)
   }
@@ -114,6 +114,7 @@ class ImageHandler extends Component {
         success = false
       }
     }
+
     this.updateEntity({ src: _targetSrc, success, alt: alt || '' })
   }
 
