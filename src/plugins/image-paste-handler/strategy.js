@@ -9,17 +9,18 @@ export default function handleImageUrl(contentBlock, cb, contentState) {
  * @param {*} contentState
  */
 function findImageUrl(contentBlock, cb, contentState) {
-  contentBlock.findEntityRanges(
-    char => {
-      const entityKey = char.getEntity()
-      if (entityKey) {
-        const entityType = contentState.getEntity(entityKey).getType()
+  const type = contentBlock.getType()
+  // atomic交给blockRenderFn去处理
+  if (type === 'atomic') return null
+  // console.log('```````````````', type)
+  contentBlock.findEntityRanges(char => {
+    const entityKey = char.getEntity()
+    if (entityKey) {
+      const entityType = contentState.getEntity(entityKey).getType()
 
-        return entityType === 'IMAGE'
-      } else {
-        return false
-      }
-    },
-    cb
-  )
+      return entityType === 'IMAGE'
+    } else {
+      return false
+    }
+  }, cb)
 }
