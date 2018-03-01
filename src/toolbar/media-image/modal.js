@@ -14,7 +14,7 @@ class ImageModal extends Component {
   onImageChange(e) {
     let file = e.target.files[0]
     let reader = new FileReader()
-console.log('change')
+
     reader.onload = (e) => {
       let result = e.target.result
 

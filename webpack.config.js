@@ -3,7 +3,7 @@ const path = require("path")
 const autoprefixer = require('autoprefixer')
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/index.jsx',
     output: {
         filename: 'fs-editor.js',
         publicPath: "/dist/",
@@ -60,45 +60,30 @@ module.exports = {
 
     devtool: 'source-map',
 
-    externals: {
-        'react': {
-            root: 'React',
-            commonjs: 'react',
-            commonjs2: 'react',
-            amd: 'react'
-        },
-        'draft-js': {
-            root: 'Draftjs',
-            commonjs: 'draft-js',
-            commonjs2: 'draft-js',
-            amd: 'draft-js'
-        },
-        'draft-convert': {
-            commonjs: 'draft-convert',
-            commonjs2: 'draft-convert',
-            amd: 'draft-convert'
-        },
-        'draft-js-export-html': {
-            commonjs: 'draft-js-export-html',
-            commonjs2: 'draft-js-export-html',
-            amd: 'draft-js-export-html'
-        },
-        'react-dom': {
-            commonjs: 'react-dom',
-            commonjs2: 'react-dom',
-            amd: 'react-dom'
-        },
-        'prop-types': {
-            root: 'PropTypes',
-            commonjs: 'prop-types',
-            commonjs2: 'prop-types',
-            amd: 'prop-types'
-        },
-        '@fs/noty': {
-            root: 'Noty',
-            commonjs: '@fs/noty',
-            commonjs2: '@fs/noty',
-            amd: '@fs/noty'
+    externals: _externals()
+}
+
+function _externals() {
+    const exs = [
+        'react',
+        'react-dom',
+        'prop-types',
+        'classnames',
+        'draft-js',
+        'draft-convert',
+        'draft-js-export-html',
+        '@fs/noty',
+        'draft-js-plugins-editor',
+        'draft-js-focus-plugin'
+    ]
+
+    const result = {}
+    exs.forEach(ex => {
+        result[ex] = {
+            'commonjs': ex,
+            'commonjs2': ex
         }
-    }
+    })
+
+    return result
 }

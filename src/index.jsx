@@ -1,15 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Editor, EditorState, RichUtils, AtomicBlockUtils } from 'draft-js'
+import Editor from 'draft-js-plugins-editor'
+import { EditorState, RichUtils, AtomicBlockUtils } from 'draft-js'
+import plugins from './plugins'
 import * as utils from './utils'
 import uploadImage from './utils/upload/upload-image'
 import { isImage } from './utils/common'
-import decorators from './decorators'
 
-import Media from './components/custom-block/media'
 import Toolbar from './toolbar'
 
 import './index.css'
+
+// 隐藏warning:A component is `contentEditable` and contains `children` managed by React. It is now your responsibility to guarantee that none of those nodes are unexpectedly modified or duplicated. This is probably not intentional.
+const _errFunc = console.error
+console.error = function(msg) {
+  if (
+    msg.indexOf(
+      `A component is \`contentEditable\` and contains \`children\` managed by React`
+    ) > -1
+  ) {
+    return
+  }
+  _errFunc(msg)
+}
 
 class FsEditor extends React.Component {
   static propTypes = {
@@ -57,12 +70,9 @@ class FsEditor extends React.Component {
     let editorState = null
 
     if (defaultState) {
-      editorState = EditorState.createWithContent(
-        defaultState.getCurrentContent(),
-        decorators
-      )
+      editorState = defaultState
     } else {
-      editorState = EditorState.createEmpty(decorators)
+      editorState = EditorState.createEmpty()
     }
 
     this.state = {
@@ -106,7 +116,7 @@ class FsEditor extends React.Component {
       return
     }
 
-    if (cb) {
+    if (cb && typeof cb === 'function') {
       this.setState(
         {
           editorState
@@ -196,17 +206,6 @@ class FsEditor extends React.Component {
     this.onChange(newState, this._focus.bind(this))
   }
 
-  _mediaBlockRendererFn(block) {
-    const blockType = block.getType()
-
-    if (blockType === 'atomic') {
-      return {
-        component: Media,
-        editable: false
-      }
-    }
-  }
-
   _toggleInlineStyle(type) {
     const newState = RichUtils.toggleInlineStyle(this.state.editorState, type)
 
@@ -232,7 +231,7 @@ class FsEditor extends React.Component {
   }
 
   componentDidMount() {
-    if(this.props.autoFocus) {
+    if (this.props.autoFocus) {
       this._focus()
     }
   }
@@ -256,8 +255,8 @@ class FsEditor extends React.Component {
           <Editor
             editorState={this.state.editorState}
             handleKeyCommand={this.handleKeyCommand}
+            plugins={plugins}
             onChange={this.onChange}
-            blockRendererFn={this._mediaBlockRendererFn}
             handlePastedFiles={this.onFilePasted}
             ref="editor"
           />

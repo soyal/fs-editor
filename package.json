@@ -1,6 +1,6 @@
 {
   "name": "@fs/fs-editor",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "An editor with draft-js",
   "main": "dist/fs-editor.js",
   "scripts": {
@@ -15,15 +15,19 @@
   "dependencies": {
     "@fs/noty": "^1.1.0",
     "babel-runtime": "^6.26.0",
+    "classnames": "^2.2.5",
+    "decorate-component-with-props": "^1.1.0",
     "draft-convert": "^1.4.9",
-    "draft-js": "^0.10.5",
+    "draft-js": "0.10.5",
     "draft-js-export-html": "^1.2.0",
+    "draft-js-focus-plugin": "^2.0.1",
+    "draft-js-image-plugin": "^2.0.1",
     "draft-js-plugins-editor": "^2.0.4",
     "prop-types": "^15.5.10"
   },
   "peerDependencies": {
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.6",
@@ -31,6 +35,7 @@
     "@storybook/react": "^3.2.8",
     "autoprefixer": "^7.1.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-latest": "^6.24.1",
@@ -42,8 +47,8 @@
     "less-loader": "^4.0.5",
     "postcss-flexbugs-fixes": "^3.2.0",
     "prettier": "^1.10.2",
-    "react": "^15.6.2",
-    "react-dom": "^15.6.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "style-loader": "^0.18.2"
   }
 }

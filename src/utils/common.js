@@ -15,7 +15,7 @@ export const isImage = file => {
 
 /**
  * @param {String} url 要匹配的url
- * @param {String} domain 域名 e.g: image-cdn.fishsaying.com
+ * @param {Array} domain 域名 e.g: image-cdn.fishsaying.com
  */
 export const isInDomain = (url, domain) => {
   domain = domain || config.imageDomain
@@ -25,5 +25,5 @@ export const isInDomain = (url, domain) => {
 
   const urlDomain = matches[1]
 
-  return domain === urlDomain
+  return domain.indexOf(urlDomain) > -1
 }
