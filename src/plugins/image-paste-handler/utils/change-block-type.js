@@ -9,6 +9,6 @@ import { Modifier, SelectionState } from 'draft-js'
 export default function changeBlockType(contentBlock, contentState, type) {
   const blockKey = contentBlock.getKey()
   const nSelection = SelectionState.createEmpty(blockKey)
-debugger
+
   return Modifier.setBlockType(contentState, nSelection, type)
 }

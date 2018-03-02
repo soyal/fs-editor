@@ -6,6 +6,7 @@ import createPlugins from './plugins'
 import * as utils from './utils'
 import uploadImage from './utils/upload/upload-image'
 import { isImage } from './utils/common'
+import pasteHandler from './lib/paste-handler'
 
 import Toolbar from './toolbar'
 
@@ -83,7 +84,7 @@ class FsEditor extends React.Component {
     this.toggleBlockType = this._toggleBlockType.bind(this)
     this.handleKeyCommand = this._handleKeyCommand.bind(this)
     this.insertMediaBlock = this._insertMediaBlock.bind(this)
-
+    this.handlePastedText = this.handlePastedText.bind(this)
     this.onChange = this.onChange.bind(this)
   }
 
@@ -218,6 +219,14 @@ class FsEditor extends React.Component {
     this.onChange(newState, this._focus.bind(this))
   }
 
+  handlePastedText(text, html, editorState) {
+    pasteHandler(text, html, editorState, {
+      onChange: this.onChange
+    })
+    
+    return 'handled'
+  }
+
   onFilePasted = files => {
     files.forEach(file => {
       if (isImage(file)) {
@@ -260,6 +269,7 @@ class FsEditor extends React.Component {
             })}
             onChange={this.onChange}
             handlePastedFiles={this.onFilePasted}
+            handlePastedText={this.handlePastedText}
             ref="editor"
           />
         </div>
