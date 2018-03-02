@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Editor from 'draft-js-plugins-editor'
 import { EditorState, RichUtils, AtomicBlockUtils } from 'draft-js'
-import plugins from './plugins'
+import createPlugins from './plugins'
 import * as utils from './utils'
 import uploadImage from './utils/upload/upload-image'
 import { isImage } from './utils/common'
@@ -255,7 +255,9 @@ class FsEditor extends React.Component {
           <Editor
             editorState={this.state.editorState}
             handleKeyCommand={this.handleKeyCommand}
-            plugins={plugins}
+            plugins={createPlugins({
+              onChange: this.onChange
+            })}
             onChange={this.onChange}
             handlePastedFiles={this.onFilePasted}
             ref="editor"

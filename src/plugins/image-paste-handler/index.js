@@ -1,7 +1,8 @@
-import imageUrlStrategy from './strategy'
+import createStrategy from './strategy'
 import decorateComponentWithProps from 'decorate-component-with-props'
 import ImageBlock from './image-block'
-import ImageUpload from './image-upload'
+// import ImageUpload from './image-upload'
+import ImageUploadLoading from './image-upload-loading'
 
 /**
  * image paste handler
@@ -19,6 +20,7 @@ export default (config = {}) => {
     // handle single image paste and insert image by tool click
     blockRendererFn: (block, { getEditorState }) => {
       if (block.getType() === 'atomic') {
+        console.log(block)
         const key = block.getEntityAt(0)
         if (!key) {
           return null
@@ -42,8 +44,8 @@ export default (config = {}) => {
     // handle text-image pasted
     decorators: [
       {
-        strategy: imageUrlStrategy,
-        component: decorateComponentWithProps(ImageUpload, { ImageComponent: ThemedImage })
+        strategy: createStrategy(config),
+        component: ImageUploadLoading
       }
     ]
   }
