@@ -114,6 +114,7 @@ class ImageHandler extends Component {
         status: 'uploaded'
       })
       this.updateEntity({ src: _targetSrc })
+      
     }
   }
 
