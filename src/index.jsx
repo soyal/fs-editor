@@ -219,11 +219,16 @@ class FsEditor extends React.Component {
     this.onChange(newState, this._focus.bind(this))
   }
 
+  getEditorState = () => {
+    return this.state.editorState
+  }
+
   handlePastedText(text, html, editorState) {
-    pasteHandler(text, html, editorState, {
-      onChange: this.onChange
+    pasteHandler(text, html, {
+      setEditorState: this.onChange,
+      getEditorState: this.getEditorState
     })
-    
+
     return 'handled'
   }
 
