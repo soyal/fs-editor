@@ -10,12 +10,12 @@ npm run storybook
 ## 使用方式
 安装
 ```
-npm install --save @fs/fs-editor --registry=http://npm.fishsaying.com
+npm install --save fs-editor
 ```
 使用
 ```javascript
 import React, {Component} from 'react'
-import FsEditor from '@fs/fs-editor'
+import FsEditor from 'fs-editor'
 
 class Demo extends Component {
   render() {
@@ -97,7 +97,7 @@ class Demo extends Component {
 ## utils工具函数
 所有的工具函数会以静态方法的方式挂载在FsEditor.utils命名空间上, 如`isEmpty`的调用
 ```javascript
-import FsEditor from '@fs/fs-editor'
+import FsEditor from 'fs-editor'
 //调用方式
 FsEditor.utils.isEmpty(editor)
 ```
