@@ -270,9 +270,7 @@ class FsEditor extends React.Component {
           <Editor
             editorState={this.state.editorState}
             handleKeyCommand={this.handleKeyCommand}
-            plugins={createPlugins({
-              onChange: this.onChange
-            })}
+            plugins={createPlugins()}
             onChange={this.onChange}
             handlePastedFiles={this.onFilePasted}
             handlePastedText={this.handlePastedText}
