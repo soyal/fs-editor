@@ -9,7 +9,7 @@ class DataConvert extends Component {
     editorState: FsEditor.utils.convertFromHtml(
       `<p>&nbsp;</p>
       <p>囧》筹拍时，徐峥也找过张译，定的是黄渤那个角色。当时张译已经口头答应了另一个戏约，只好咬着牙推掉了《泰囧》。后来《泰囧》的票房卖了12.6亿元，而张译接的那部戏，到现在还因为各种原因没能播出。再提这事儿时，张译有些尴尬，“毕竟已经答应人家了”。</p>
-      <p><img src="https://image-cdn.fishsaying.com/7b5c4dc132f646a7893c951a7b3af627"/></p>
+      <p><img src="http://via.placeholder.com/350x150"/></p>
       <p>但经历过这些绊子，他依旧如故。老老实实做人，本本分分拍戏。</p>`
     ),
     text: ''
@@ -47,7 +47,7 @@ class DataConvert extends Component {
             return new Promise(resolve => {
               setTimeout(() => {
                 resolve({
-                  result: 'https://image-cdn.fishsaying.com/6c0db133649c49f896876fe56caeba6f.jpg@310w_240h',
+                  result: 'http://via.placeholder.com/350x150',
                   success: false
                 })
               }, 1000)
