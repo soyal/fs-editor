@@ -1,7 +1,5 @@
-import imageUrlStrategy from './strategy'
 import decorateComponentWithProps from 'decorate-component-with-props'
 import ImageBlock from './image-block'
-import ImageUpload from './image-upload'
 
 /**
  * image paste handler
@@ -37,14 +35,6 @@ export default (config = {}) => {
 
         return null
       }
-    },
-
-    // handle text-image pasted
-    decorators: [
-      {
-        strategy: imageUrlStrategy,
-        component: decorateComponentWithProps(ImageUpload, { ImageComponent: ThemedImage })
-      }
-    ]
+    }
   }
 }

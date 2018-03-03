@@ -2,10 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Editor from 'draft-js-plugins-editor'
 import { EditorState, RichUtils, AtomicBlockUtils } from 'draft-js'
-import plugins from './plugins'
+import createPlugins from './plugins'
 import * as utils from './utils'
 import uploadImage from './utils/upload/upload-image'
 import { isImage } from './utils/common'
+import pasteHandler from './lib/paste-handler'
 
 import Toolbar from './toolbar'
 
@@ -39,7 +40,7 @@ class FsEditor extends React.Component {
     onImageInsert: PropTypes.func.isRequired, // 插入图片的回调，(file, base64, insertImage(url))
     // 图文混合粘贴时候，对图片的处理(url:string): Promise, url为粘贴的图片的url
     // Promise resolve({result: 处理完成的url, success: 处理图片是否成功})
-    // 注意：如果粘贴的是本域名下的(image-cdn.fishsaying.com)图片，则不触发此回调，直接完成粘贴
+    // 注意：如果粘贴的是本域名下的(e.g:image-cdn.fishsaying.com)图片，则不触发此回调，直接完成粘贴
     onImagePaste: PropTypes.func,
     imageSizeLimit: PropTypes.number, // 图片大小限制，默认是10M，单位是Byte，如10M = 1024 * 1024 * 10
     imageMIME: PropTypes.array // 图片支持的类型，默认['image/png', 'image/jpeg']
@@ -83,7 +84,7 @@ class FsEditor extends React.Component {
     this.toggleBlockType = this._toggleBlockType.bind(this)
     this.handleKeyCommand = this._handleKeyCommand.bind(this)
     this.insertMediaBlock = this._insertMediaBlock.bind(this)
-
+    this.handlePastedText = this.handlePastedText.bind(this)
     this.onChange = this.onChange.bind(this)
   }
 
@@ -218,6 +219,20 @@ class FsEditor extends React.Component {
     this.onChange(newState, this._focus.bind(this))
   }
 
+  getEditorState = () => {
+    return this.state.editorState
+  }
+
+  handlePastedText(text, html, editorState) {
+    pasteHandler(text, html, {
+      setEditorState: this.onChange,
+      getEditorState: this.getEditorState,
+      onImagePaste: this.props.onImagePaste
+    })
+
+    return 'handled'
+  }
+
   onFilePasted = files => {
     files.forEach(file => {
       if (isImage(file)) {
@@ -255,9 +270,10 @@ class FsEditor extends React.Component {
           <Editor
             editorState={this.state.editorState}
             handleKeyCommand={this.handleKeyCommand}
-            plugins={plugins}
+            plugins={createPlugins()}
             onChange={this.onChange}
             handlePastedFiles={this.onFilePasted}
+            handlePastedText={this.handlePastedText}
             ref="editor"
           />
         </div>

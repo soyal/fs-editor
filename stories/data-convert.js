@@ -47,7 +47,7 @@ class DataConvert extends Component {
             return new Promise(resolve => {
               setTimeout(() => {
                 resolve({
-                  result: url,
+                  result: 'https://image-cdn.fishsaying.com/6c0db133649c49f896876fe56caeba6f.jpg@310w_240h',
                   success: false
                 })
               }, 1000)
