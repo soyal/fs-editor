@@ -1,57 +1,59 @@
 import { convertFromHtml } from '../../utils/convert-from-html'
-import { Modifier, EditorState } from 'draft-js'
+import { insertContent, mergeEntitDatas, handleOnImagePaste } from './utils'
+import { EditorState } from 'draft-js'
 import config from 'config.js'
 
 /**
  * 处理粘贴事件
  * @param {EditorState} editorState 粘贴前的editorState
  */
-export default (text, html, { setEditorState, getEditorState }) => {
-  const nEditorState = convertFromHtml(html)
+export default (
+  text,
+  html,
+  { setEditorState, getEditorState, onImagePaste }
+) => {
+  const fragmentState = convertFromHtml(html)
   // 粘贴的blockMap
-  let _contentState = nEditorState.getCurrentContent()
-  const blockMap = _contentState.blockMap
+  let fragmentContent = fragmentState.getCurrentContent()
+  const fragmentBlockMap = fragmentContent.blockMap
 
   const allPromises = []
-  blockMap.forEach(block => {
+  const currentDatas = []
+
+  fragmentBlockMap.forEach(block => {
     const entityKey = block.getEntityAt(0)
     if (!entityKey) return
-    const entity = _contentState.getEntity(entityKey)
+    const entity = fragmentContent.getEntity(entityKey)
+
     if (entity.getType() === 'image') {
       // 设置loading图
-      _contentState = _contentState.mergeEntityData(entityKey, {
-        src: config.loadingImage
+      currentDatas.push({
+        entityKey,
+        data: { src: config.loadingImage }
       })
-      allPromises.push(
-        new Promise(resolve => {
-          setTimeout(() => {
-            resolve(entityKey, {
-              src: 'https://avatars1.githubusercontent.com/u/13882188?s=460&v=4'
-            })
-          }, 1000)
-        })
-      )
+
+      // 粘贴的图片，会在所有完成处理后统一进行替换
+      allPromises.push(handleOnImagePaste(entityKey, entity, onImagePaste))
     }
   })
-  Promise.all(allPromises).then(datas => {
-    // todo
-  })
 
-  const editorState = getEditorState()
-  const newState = Modifier.replaceWithFragment(
-    editorState.getCurrentContent(),
-    editorState.getSelection(),
-    blockMap
-  )
+  if (currentDatas.length > 0) {
+    fragmentContent = mergeEntitDatas(fragmentContent, currentDatas)
+  }
 
-  setEditorState(EditorState.push(editorState, newState))
-}
+  // 等待promise resolve 然后替换entityData
+  if (allPromises.length > 0) {
+    Promise.all(allPromises).then(datas => {
+      const resolvedContent = mergeEntitDatas(
+        getEditorState().getCurrentContent(),
+        datas
+      )
+      setEditorState(EditorState.createWithContent(resolvedContent))
+    })
+  }
 
-/**
- * 合并entityData
- * @param {Array<Object>} datas
- * @return {ContentState}
- */
-function mergeEntitDatas(datas, { getEditorState }) {
+  // 将paste的内容插入原本的内容
+  const nEditorState = insertContent(getEditorState(), fragmentContent)
 
+  setEditorState(nEditorState)
 }

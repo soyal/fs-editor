@@ -1,8 +1,5 @@
-// import createStrategy from './strategy'
 import decorateComponentWithProps from 'decorate-component-with-props'
 import ImageBlock from './image-block'
-// import ImageUpload from './image-upload'
-// import ImageUploadLoading from './image-upload-loading'
 
 /**
  * image paste handler
@@ -38,14 +35,6 @@ export default (config = {}) => {
 
         return null
       }
-    },
-
-    // handle text-image pasted
-    // decorators: [
-    //   {
-    //     strategy: createStrategy(config),
-    //     component: ImageUploadLoading
-    //   }
-    // ]
+    }
   }
 }

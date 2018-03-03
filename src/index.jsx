@@ -40,7 +40,7 @@ class FsEditor extends React.Component {
     onImageInsert: PropTypes.func.isRequired, // 插入图片的回调，(file, base64, insertImage(url))
     // 图文混合粘贴时候，对图片的处理(url:string): Promise, url为粘贴的图片的url
     // Promise resolve({result: 处理完成的url, success: 处理图片是否成功})
-    // 注意：如果粘贴的是本域名下的(image-cdn.fishsaying.com)图片，则不触发此回调，直接完成粘贴
+    // 注意：如果粘贴的是本域名下的(e.g:image-cdn.fishsaying.com)图片，则不触发此回调，直接完成粘贴
     onImagePaste: PropTypes.func,
     imageSizeLimit: PropTypes.number, // 图片大小限制，默认是10M，单位是Byte，如10M = 1024 * 1024 * 10
     imageMIME: PropTypes.array // 图片支持的类型，默认['image/png', 'image/jpeg']
@@ -226,7 +226,8 @@ class FsEditor extends React.Component {
   handlePastedText(text, html, editorState) {
     pasteHandler(text, html, {
       setEditorState: this.onChange,
-      getEditorState: this.getEditorState
+      getEditorState: this.getEditorState,
+      onImagePaste: this.props.onImagePaste
     })
 
     return 'handled'
