@@ -47,7 +47,7 @@ export function handleOnImagePaste(
   }
 
   return urlPro.then(({ success, result }) => {
-    if (!result || success === undefined) {
+    if (success === undefined) {
       throw new Error(
         `props onImagePaste expect you return Promise, and the promise resolve a data:Object like {success: true, result: 'http://example.com/image'}`
       )
