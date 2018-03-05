@@ -1,6 +1,6 @@
 import { convertFromHtml } from '../../utils/convert-from-html'
-import { insertContent, mergeEntitDatas, handleOnImagePaste } from './utils'
-import { EditorState } from 'draft-js'
+import { insertContent, mergeEntityDatas, handleOnImagePaste } from './utils'
+import { EditorState, RichUtils } from 'draft-js'
 
 /**
  * 处理粘贴事件
@@ -39,24 +39,27 @@ export default (
   })
 
   if (currentDatas.length > 0) {
-    fragmentContent = mergeEntitDatas(fragmentContent, currentDatas)
+    fragmentContent = mergeEntityDatas(fragmentContent, currentDatas)
   }
 
   // 等待promise resolve 然后替换entityData
   if (allPromises.length > 0) {
     Promise.all(allPromises).then(datas => {
       const _editorState = getEditorState()
-      const resolvedContent = mergeEntitDatas(
+      const resolvedContent = mergeEntityDatas(
         _editorState.getCurrentContent(),
         datas
       )
-      let _nState = EditorState.createWithContent(resolvedContent)
+      let _nState = EditorState.push(_editorState, resolvedContent, 'apply-entity')
 
       // 否则会丢失selection信息
       _nState = EditorState.acceptSelection(
         _nState,
         _editorState.getSelection()
       )
+
+      // 强制state更新，否则视图不会re-render
+      _nState = RichUtils.insertSoftNewline(_nState)
 
       setEditorState(_nState)
     })

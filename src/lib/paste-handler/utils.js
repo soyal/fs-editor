@@ -5,7 +5,7 @@ import { EditorState, Modifier } from 'draft-js'
  * @param {Array<Object>} datas [{entityKey: string, data: object}]
  * @return {ContentState}
  */
-export function mergeEntitDatas(contentState, datas) {
+export function mergeEntityDatas(contentState, datas) {
   let nContentState
   datas.forEach(_data => {
     const { entityKey, data } = _data
@@ -27,7 +27,7 @@ export function insertContent(originEditorState, insertContentState) {
     insertContentState.blockMap
   )
 
-  return EditorState.push(originEditorState, nContentState)
+  return EditorState.push(originEditorState, nContentState, 'insert-fragment')
   // return EditorState.moveFocusToEnd(result)
 }
 
