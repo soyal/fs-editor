@@ -7,6 +7,7 @@ import * as utils from './utils'
 import uploadImage from './utils/upload/upload-image'
 import { isImage } from './utils/common'
 import pasteHandler from './lib/paste-handler'
+import config from 'config.js'
 
 import Toolbar from './toolbar'
 
@@ -38,6 +39,8 @@ class FsEditor extends React.Component {
      * @param {Function} insertImage 插入图片的方法, 传参为要插入的图片的url
      */
     onImageInsert: PropTypes.func.isRequired, // 插入图片的回调，(file, base64, insertImage(url))
+    errorImage: PropTypes.string, // onImagePaste中返回succss:false后，显示的图片
+    loadingImage: PropTypes.string, // onImagePaste处理中，loading的图片
     // 图文混合粘贴时候，对图片的处理(url:string): Promise, url为粘贴的图片的url
     // Promise resolve({result: 处理完成的url, success: 处理图片是否成功})
     // 注意：如果粘贴的是本域名下的(e.g:image-cdn.fishsaying.com)图片，则不触发此回调，直接完成粘贴
@@ -48,6 +51,8 @@ class FsEditor extends React.Component {
 
   static defaultProps = {
     autoFocus: false,
+    errorImage: config.errorImage,
+    loadingImage: config.loadingImage,
     onImagePaste: url => {
       return {
         result: url,
@@ -227,7 +232,9 @@ class FsEditor extends React.Component {
     pasteHandler(text, html, {
       setEditorState: this.onChange,
       getEditorState: this.getEditorState,
-      onImagePaste: this.props.onImagePaste
+      onImagePaste: this.props.onImagePaste,
+      errorImage: this.props.errorImage,
+      loadingImage: this.props.loadingImage
     })
 
     return 'handled'

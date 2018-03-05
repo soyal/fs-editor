@@ -1,5 +1,4 @@
 import { EditorState, Modifier } from 'draft-js'
-import config from 'config.js'
 /**
  * 合并entityData
  * @param {ContentState} contentState
@@ -28,11 +27,16 @@ export function insertContent(originEditorState, insertContentState) {
     insertContentState.blockMap
   )
 
-  let result = EditorState.createWithContent(nContentState)
-  return EditorState.moveFocusToEnd(result)
+  return EditorState.push(originEditorState, nContentState)
+  // return EditorState.moveFocusToEnd(result)
 }
 
-export function handleOnImagePaste(entityKey, entity, onImagePaste) {
+export function handleOnImagePaste(
+  entityKey,
+  entity,
+  onImagePaste,
+  { errorImage }
+) {
   const urlPro = onImagePaste(entity.getData().src)
 
   // 判断onImagePaste是否返回Promise
@@ -52,9 +56,9 @@ export function handleOnImagePaste(entityKey, entity, onImagePaste) {
     const _data = {
       entityKey: entityKey
     }
-    if(!success) {
+    if (!success) {
       _data.data = {
-        src: config.errorImage
+        src: errorImage
       }
     } else {
       _data.data = {

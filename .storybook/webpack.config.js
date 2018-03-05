@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
   module: {
@@ -16,11 +16,11 @@ module.exports = {
       },
       {
         test: /\.(css|less)$/,
-        use: [ 'style-loader', 'css-loader', 'less-loader' ]
+        use: ['style-loader', 'css-loader', 'less-loader']
       }
     ]
   },
-  
+
   resolve: {
     modules: ['node_modules', path.resolve(__dirname, '../src')],
     // These are the reasonable defaults supported by the Node ecosystem.

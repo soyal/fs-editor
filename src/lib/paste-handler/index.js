@@ -1,7 +1,6 @@
 import { convertFromHtml } from '../../utils/convert-from-html'
 import { insertContent, mergeEntitDatas, handleOnImagePaste } from './utils'
 import { EditorState } from 'draft-js'
-import config from 'config.js'
 
 /**
  * 处理粘贴事件
@@ -10,7 +9,7 @@ import config from 'config.js'
 export default (
   text,
   html,
-  { setEditorState, getEditorState, onImagePaste }
+  { setEditorState, getEditorState, onImagePaste, errorImage, loadingImage }
 ) => {
   const fragmentState = convertFromHtml(html)
   // 粘贴的blockMap
@@ -29,11 +28,13 @@ export default (
       // 设置loading图
       currentDatas.push({
         entityKey,
-        data: { src: config.loadingImage }
+        data: { src: loadingImage }
       })
 
       // 粘贴的图片，会在所有完成处理后统一进行替换
-      allPromises.push(handleOnImagePaste(entityKey, entity, onImagePaste))
+      allPromises.push(
+        handleOnImagePaste(entityKey, entity, onImagePaste, { errorImage })
+      )
     }
   })
 
