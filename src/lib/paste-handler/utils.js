@@ -1,11 +1,11 @@
-import { EditorState, Modifier } from 'draft-js'
+import { EditorState, Modifier, Entity } from 'draft-js'
 /**
  * 合并entityData
  * @param {ContentState} contentState
  * @param {Array<Object>} datas [{entityKey: string, data: object}]
  * @return {ContentState}
  */
-export function mergeEntitDatas(contentState, datas) {
+export function mergeEntityDatas(contentState, datas) {
   let nContentState
   datas.forEach(_data => {
     const { entityKey, data } = _data
@@ -13,6 +13,13 @@ export function mergeEntitDatas(contentState, datas) {
   })
 
   return nContentState
+}
+
+export function updateEntityDatas(datas) {
+  datas.forEach(_data => {
+    const { entityKey, data } = _data
+    Entity.mergeData(entityKey, data)
+  })
 }
 
 /**
@@ -27,7 +34,7 @@ export function insertContent(originEditorState, insertContentState) {
     insertContentState.blockMap
   )
 
-  return EditorState.push(originEditorState, nContentState)
+  return EditorState.push(originEditorState, nContentState, 'insert-fragment')
   // return EditorState.moveFocusToEnd(result)
 }
 
