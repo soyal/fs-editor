@@ -52,12 +52,6 @@ export default (
       )
       let _nState = EditorState.push(_editorState, resolvedContent, 'apply-entity')
 
-      // 否则会丢失selection信息
-      _nState = EditorState.acceptSelection(
-        _nState,
-        _editorState.getSelection()
-      )
-
       // 强制state更新，否则视图不会re-render
       _nState = RichUtils.insertSoftNewline(_nState)
 
