@@ -1,4 +1,4 @@
-import { EditorState, Modifier, Entity } from 'draft-js'
+import { EditorState, Modifier } from 'draft-js'
 /**
  * 合并entityData
  * @param {ContentState} contentState
@@ -13,13 +13,6 @@ export function mergeEntityDatas(contentState, datas) {
   })
 
   return nContentState
-}
-
-export function updateEntityDatas(datas) {
-  datas.forEach(_data => {
-    const { entityKey, data } = _data
-    Entity.mergeData(entityKey, data)
-  })
 }
 
 /**

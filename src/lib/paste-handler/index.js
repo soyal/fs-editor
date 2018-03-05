@@ -1,5 +1,5 @@
 import { convertFromHtml } from '../../utils/convert-from-html'
-import { insertContent, mergeEntityDatas, handleOnImagePaste, updateEntityDatas } from './utils'
+import { insertContent, mergeEntityDatas, handleOnImagePaste } from './utils'
 import { EditorState, RichUtils } from 'draft-js'
 
 /**
