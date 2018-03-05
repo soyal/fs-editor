@@ -45,11 +45,20 @@ export default (
   // 等待promise resolve 然后替换entityData
   if (allPromises.length > 0) {
     Promise.all(allPromises).then(datas => {
+      const _editorState = getEditorState()
       const resolvedContent = mergeEntitDatas(
-        getEditorState().getCurrentContent(),
+        _editorState.getCurrentContent(),
         datas
       )
-      setEditorState(EditorState.createWithContent(resolvedContent))
+      let _nState = EditorState.createWithContent(resolvedContent)
+
+      // 否则会丢失selection信息
+      _nState = EditorState.acceptSelection(
+        _nState,
+        _editorState.getSelection()
+      )
+
+      setEditorState(_nState)
     })
   }
 

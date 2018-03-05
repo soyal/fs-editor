@@ -37,14 +37,7 @@ export function handleOnImagePaste(
   onImagePaste,
   { errorImage }
 ) {
-  const urlPro = onImagePaste(entity.getData().src)
-
-  // 判断onImagePaste是否返回Promise
-  if (typeof urlPro.then !== 'function') {
-    throw new Error(
-      `you should return Promise in props onImagePaste, but got ${typeof urlPro}`
-    )
-  }
+  const urlPro = Promise.resolve(onImagePaste(entity.getData().src))
 
   return urlPro.then(({ success, result }) => {
     if (success === undefined) {
