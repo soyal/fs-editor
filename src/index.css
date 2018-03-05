@@ -16,7 +16,9 @@
   margin: 0;
 }
 .fs-editor-container img {
-  margin: 15px 30px;
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
 }
 .fs-editor-container .fs-editor-content h1, .fs-editor-container .fs-editor-content h2 {
   margin-top: 10px;
