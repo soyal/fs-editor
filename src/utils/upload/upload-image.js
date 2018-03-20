@@ -1,7 +1,7 @@
 /**
  * 上传图片
  */
-import noty from '@fs/noty'
+import noty from 'lib/noty'
 
 /**
  * @param {File} file

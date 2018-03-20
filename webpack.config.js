@@ -72,7 +72,7 @@ function _externals() {
         'draft-js',
         'draft-convert',
         'draft-js-export-html',
-        '@fs/noty',
+        'noty',
         'draft-js-plugins-editor',
         'draft-js-focus-plugin'
     ]
