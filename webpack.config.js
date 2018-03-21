@@ -12,46 +12,41 @@ module.exports = {
         libraryTarget: 'umd'
     },
     module: {
-        rules: [
-            {
-                test: /\.(js|jsx)$/,
-                loader: 'babel-loader'
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    require.resolve('style-loader'),
-                    {
-                        loader: require.resolve('css-loader'),
-                        options: {
-                            importLoaders: 1,
-                        },
+        rules: [{
+            test: /\.(js|jsx)$/,
+            loader: 'babel-loader'
+        }, {
+            test: /\.css$/,
+            use: [
+                require.resolve('style-loader'), {
+                    loader: require.resolve('css-loader'),
+                    options: {
+                        importLoaders: 1,
                     },
-                    {
-                        loader: require.resolve('postcss-loader'),
-                        options: {
-                            ident: 'postcss',
-                            plugins: () => [
-                                require('postcss-flexbugs-fixes'),
-                                autoprefixer({
-                                    browsers: [
-                                        '>1%',
-                                        'last 4 versions',
-                                        'Firefox ESR',
-                                        'not ie < 9', // React doesn't support IE8 anyway
-                                    ],
-                                    flexbox: 'no-2009',
-                                }),
-                            ],
-                        },
+                }, {
+                    loader: require.resolve('postcss-loader'),
+                    options: {
+                        ident: 'postcss',
+                        plugins: () => [
+                            require('postcss-flexbugs-fixes'),
+                            autoprefixer({
+                                browsers: [
+                                    '>1%',
+                                    'last 4 versions',
+                                    'Firefox ESR',
+                                    'not ie < 9', // React doesn't support IE8 anyway
+                                ],
+                                flexbox: 'no-2009',
+                            }),
+                        ],
                     },
+                },
 
-                    {
-                        loader: require.resolve('less-loader')
-                    }
-                ]
-            }
-        ]
+                {
+                    loader: require.resolve('less-loader')
+                }
+            ]
+        }]
     },
     resolve: {
         modules: ['node_modules', path.resolve(__dirname, './src')],
@@ -74,6 +69,9 @@ function _externals() {
         'draft-js-export-html',
         'noty',
         'draft-js-plugins-editor',
+        'draftjs-utils',
+        'linkify-it',
+        'tlds',
         'draft-js-focus-plugin'
     ]
 

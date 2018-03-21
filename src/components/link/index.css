@@ -1,0 +1,49 @@
+.link-warper{
+    position: relative;
+}
+.link-warper .link-warper-container{
+    position: absolute;
+    width: 220px;
+    height: 180px;
+    border:1px solid rgba(0,0,0,0.2);
+    top: 35px;
+    border-top:none;
+    padding:15px;
+    box-shadow: 3px 3px 5px #BFBDBD;
+    background: white;
+    z-index: 2;
+}
+.link-warper-container >div:not(.link-warper-btns){
+    display: flex;
+    line-height: 30px;
+    margin-bottom: 5px;
+    flex-direction: column;
+    font-size: 13px;
+}
+.link-warper-container input{
+    outline: none;
+    border:1px solid rgba(0,0,0,0.2);
+    height: 30px;
+    line-height: 30px;
+    color:#666;
+    text-indent: 4px;
+}
+.link-warper-container input:focus{
+    border-color:#32baa4;
+}
+.link-warper-container .link-warper-btns{
+    display: flex;
+    padding-top: 10px;
+}
+.link-warper-btns button{
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    background: #32baa4;
+    border:1px solid #32baa4;
+    color: white;
+    outline: none;
+}
+.link-warper-btns button:first-child{
+    margin-right: 30px;
+}

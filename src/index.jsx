@@ -266,6 +266,8 @@ class FsEditor extends React.Component {
           toggleBlockType={this.toggleBlockType}
           insertMediaBlock={this.insertMediaBlock}
           insertCustomBlock={this._insertCustomBlock.bind(this)}
+          editorState={this.state.editorState}
+          onChange={this.onChange}
         />
 
         <div
