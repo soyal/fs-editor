@@ -229,6 +229,8 @@ class FsEditor extends React.Component {
   }
 
   handlePastedText(text, html, editorState) {
+    if(!html) return
+
     pasteHandler(text, html, {
       setEditorState: this.onChange,
       getEditorState: this.getEditorState,
