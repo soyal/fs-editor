@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import unionClassNames from 'union-class-names';
-import linkifyIt from 'linkify-it';
-import tlds from 'tlds';
+import React, { Component } from 'react'
+import unionClassNames from 'union-class-names'
+import linkifyIt from 'linkify-it'
+import tlds from 'tlds'
 
-const linkify = linkifyIt();
-linkify.tlds(tlds);
+const linkify = linkifyIt()
+linkify.tlds(tlds)
 
 // The component we render when we encounter a hyperlink in the text
 export default class Link extends Component {
@@ -23,21 +23,19 @@ export default class Link extends Component {
       setEditorState, // eslint-disable-line no-unused-vars
       contentState, // eslint-disable-line no-unused-vars
       ...otherProps
-    } = this.props;
+    } = this.props
 
-    const combinedClassName = unionClassNames(theme.link, className);
-    const links = linkify.match(decoratedText);
-    const href = contentState.getEntity(entityKey).getData().url;
+    const combinedClassName = unionClassNames(theme.link, className)
+    const links = linkify.match(decoratedText)// eslint-disable-line no-unused-vars
+    const href = contentState.getEntity(entityKey).getData().url
     const props = {
       ...otherProps,
       href,
       target,
       rel,
-      className: combinedClassName,
-    };
+      className: combinedClassName
+    }
 
-    return component
-      ? React.createElement(component, props)
-      : <a {...props} />
+    return component ? React.createElement(component, props) : <a {...props} />
   }
 }
