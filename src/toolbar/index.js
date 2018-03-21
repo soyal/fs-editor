@@ -11,15 +11,18 @@ import UlList from './ul-list'
 import OlList from './ol-list'
 
 import Image from './media-image'
+import Link from './link'
 // import Video from './video'
 // import Audio from './audio'
 
 import './index.css'
 
 let Toolbar = ({
-  toggleInlineStyle,  // 变更内联样式
-  toggleBlockType,  // 变更块级样式
-  insertMediaBlock,  // 插入自定义块
+  toggleInlineStyle, // 变更内联样式
+  toggleBlockType, // 变更块级样式
+  insertMediaBlock, // 插入自定义块
+  editorState,
+  onChange,
   insertCustomBlock
 }) => {
   return (
@@ -62,6 +65,11 @@ let Toolbar = ({
         <Audio insertMediaBlock={insertMediaBlock}></Audio>
         */}
       </div>
+
+      <Link
+        editorState ={editorState}
+        onChange ={onChange}
+      />
     </div>
   )
 }
