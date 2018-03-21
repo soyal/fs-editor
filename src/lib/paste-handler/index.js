@@ -50,7 +50,11 @@ export default (
         _editorState.getCurrentContent(),
         datas
       )
-      let _nState = EditorState.push(_editorState, resolvedContent, 'apply-entity')
+      let _nState = EditorState.push(
+        _editorState,
+        resolvedContent,
+        'apply-entity'
+      )
 
       // 强制state更新，否则视图不会re-render
       _nState = RichUtils.insertSoftNewline(_nState)

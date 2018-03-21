@@ -1,11 +1,11 @@
-import decorateComponentWithProps from 'decorate-component-with-props';
-import Link from './link';
-import linkStrategy from './linkStrategy';
-import styles from './styles.css';
+import decorateComponentWithProps from 'decorate-component-with-props'
+import Link from './link'
+import linkStrategy from './linkStrategy'
+import styles from './styles.css'
 
 const defaultTheme = {
-  link: styles.link,
-};
+  link: styles.link
+}
 
 export default (config = {}) => {
   // Styles are overwritten instead of merged as merging causes a lot of confusion.
@@ -20,17 +20,19 @@ export default (config = {}) => {
     theme = defaultTheme,
     target = '_self',
     rel = 'noreferrer noopener'
-  } = config;
+  } = config
 
   return {
-    decorators: [{
-      strategy: linkStrategy,
-      component: decorateComponentWithProps(Link, {
-        theme,
-        target,
-        rel,
-        component
-      }),
-    }, ],
-  };
-};
+    decorators: [
+      {
+        strategy: linkStrategy,
+        component: decorateComponentWithProps(Link, {
+          theme,
+          target,
+          rel,
+          component
+        })
+      }
+    ]
+  }
+}

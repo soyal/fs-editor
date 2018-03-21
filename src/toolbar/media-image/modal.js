@@ -9,16 +9,16 @@ class ImageModal extends Component {
 
   /**
    * 执行图片上传操作
-   * @param {*} e 
+   * @param {*} e
    */
   onImageChange(e) {
     let file = e.target.files[0]
     let reader = new FileReader()
 
-    reader.onload = (e) => {
+    reader.onload = e => {
       let result = e.target.result
 
-      //todo 
+      //todo
       this.props.onUrlLoad.call(this, result)
     }
     reader.readAsDataURL(file)
@@ -27,20 +27,26 @@ class ImageModal extends Component {
   render() {
     return (
       <div>
-        <input type="file"
+        <input
+          type="file"
           style={{ display: 'none' }}
           ref="imageInput"
           onChange={this.onImageChange}
-          onClick={(e) => {
+          onClick={e => {
             e.nativeEvent.stopImmediatePropagation()
-          }} />
-        <div className="fs-toolbar-image-modal"
-          onClick={(e) => {
+          }}
+        />
+        <div
+          className="fs-toolbar-image-modal"
+          onClick={e => {
             // 为了实现点击页面其他区域隐藏该弹窗
             e.preventDefault()
             e.nativeEvent.stopImmediatePropagation()
             this.refs.imageInput.click()
-          }}>图片弹窗</div>
+          }}
+        >
+          图片弹窗
+        </div>
       </div>
     )
   }

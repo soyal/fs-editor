@@ -7,7 +7,7 @@ import './image.css'
 
 // const MIME = ['image/png', 'image/jpeg', 'image/gif']
 const MIME = ['image/png', 'image/jpeg']
-const LIMIT_SIZE = 1024 * 1024 * 10  // 10M
+const LIMIT_SIZE = 1024 * 1024 * 10 // 10M
 /**
  * 点击了图片上传然后弹窗
  */
@@ -24,12 +24,11 @@ class Image extends Component {
     this.state = {
       // isShowModal: false
     }
-
   }
 
   /**
    * 点击了toolbar上的图片图标
-   * @param {*} e 
+   * @param {*} e
    */
   buttonClickHandler(e) {
     // e.nativeEvent.stopImmediatePropagation()
@@ -44,30 +43,51 @@ class Image extends Component {
     const mimeArr = this.context.imageMIME || MIME
     const limitSize = this.context.imageSizeLimit || LIMIT_SIZE
 
-    uploadImage(file, this.context.onImageInsert, (url) => {
-      this.props.insertMediaBlock('image', url)
-    }, {
-      imageMIME: mimeArr,
-      imageSizeLimit: limitSize
-    })
+    uploadImage(
+      file,
+      this.context.onImageInsert,
+      url => {
+        this.props.insertMediaBlock('image', url)
+      },
+      {
+        imageMIME: mimeArr,
+        imageSizeLimit: limitSize
+      }
+    )
   }
 
   render() {
     const imageMIME = this.context.imageMIME || MIME
 
     return (
-      <div className="fs-toolbar-image-container" >
-        <input type="file" 
-        style={{ display: 'none' }} 
-        ref={(dom) => {this.fileInput = dom}}
-        accept={imageMIME.join(',')}
-        key={Math.random()}
-        onChange={this.onFileChange.bind(this)} />
-        <button className="fs-editor-toolbar-button" onClick={this.buttonClickHandler.bind(this)}>
+      <div className="fs-toolbar-image-container">
+        <input
+          type="file"
+          style={{ display: 'none' }}
+          ref={dom => {
+            this.fileInput = dom
+          }}
+          accept={imageMIME.join(',')}
+          key={Math.random()}
+          onChange={this.onFileChange.bind(this)}
+        />
+        <button
+          className="fs-editor-toolbar-button"
+          onClick={this.buttonClickHandler.bind(this)}
+        >
           <svg viewBox="0 0 18 18">
-            <rect className="fs-editor-stroke" height="10" width="12" x="3" y="4"></rect>
-            <circle className="fs-editor-fill" cx="6" cy="7" r="1"></circle>
-            <polyline className="fs-editor-even fs-editor-fill" points="5 12 5 11 7 9 8 10 11 7 13 9 13 12 5 12"></polyline>
+            <rect
+              className="fs-editor-stroke"
+              height="10"
+              width="12"
+              x="3"
+              y="4"
+            />
+            <circle className="fs-editor-fill" cx="6" cy="7" r="1" />
+            <polyline
+              className="fs-editor-even fs-editor-fill"
+              points="5 12 5 11 7 9 8 10 11 7 13 9 13 12 5 12"
+            />
           </svg>
         </button>
 
@@ -78,7 +98,7 @@ class Image extends Component {
           }}></Modal>
         ) : null}
         */}
-      </div >
+      </div>
     )
   }
 }

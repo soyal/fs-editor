@@ -2,7 +2,7 @@
  * 基于Noty封装的消息提示组件
  * Noty github: https://github.com/needim/noty
  * 使用方法：
- * noty.info(text)  
+ * noty.info(text)
  * noty.success(text)
  * noty.error(text)
  * noty.warning(text)
