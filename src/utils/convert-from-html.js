@@ -1,12 +1,6 @@
-import {
-  EditorState,
-  Entity
-} from 'draft-js'
+import { EditorState, Entity } from 'draft-js'
 
-import {
-  convertFromHTML
-} from 'draft-convert'
-
+import { convertFromHTML } from 'draft-convert'
 
 /**
  * 用于将后端传过来的html转换成editorState
@@ -14,21 +8,18 @@ import {
  * @param String html html字符串
  * @return Object editorState draft-js的editorState
  */
-export const convertFromHtml = (html) => {
-
+export const convertFromHtml = html => {
   const contentState = convertFromHTML({
     htmlToEntity: (nodeName, node) => {
       if (nodeName === 'img') {
-        return Entity.create(
-          'image',
-          'MUTABLE',
-          { src: node.getAttribute('src') }
-        )
+        return Entity.create('image', 'MUTABLE', {
+          src: node.getAttribute('src')
+        })
       }
     },
 
     htmlToBlock: (nodeName, node) => {
-      if(nodeName === 'img') {
+      if (nodeName === 'img') {
         return {
           type: 'atomic',
           data: {}

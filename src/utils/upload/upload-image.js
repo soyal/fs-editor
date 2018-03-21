@@ -13,14 +13,14 @@ import noty from 'lib/noty'
  *   imageSizeLimit: 大小限制，单位是byte  1024 byte = 1kb
  * }
  */
-export default (file, uploadFn, insertFn,option = {}) => {
-  const LIMIT_SIZE = 1024 * 1024 * 10  // 10M
+export default (file, uploadFn, insertFn, option = {}) => {
+  const LIMIT_SIZE = 1024 * 1024 * 10 // 10M
   const MIME = ['image/png', 'image/jpeg']
 
   const mimeArr = option.imageMIME || MIME
   const limitSize = option.imageSizeLimit || LIMIT_SIZE
 
-  let isAllowed = mimeArr.some((mime) => {
+  let isAllowed = mimeArr.some(mime => {
     return mime === file.type
   })
 
@@ -31,14 +31,19 @@ export default (file, uploadFn, insertFn,option = {}) => {
 
   // 验证上传的图片是否在大小限制内
   if (file.size > limitSize) {
-    noty.warning(`图片大小超过限制，请上传${parseInt(limitSize / (1024 * 1024), 10)}M以内的图片`)
+    noty.warning(
+      `图片大小超过限制，请上传${parseInt(
+        limitSize / (1024 * 1024),
+        10
+      )}M以内的图片`
+    )
     return false
   }
 
   // 转为base64用于预览并上传
   let reader = new FileReader()
-  reader.addEventListener('load', (e) => {
-    let result = e.target.result  //base64
+  reader.addEventListener('load', e => {
+    let result = e.target.result //base64
     uploadFn(file, result, insertFn)
   })
 

@@ -3,11 +3,13 @@
  */
 import React from 'react'
 
-let DivideLine = ({onClick}) => {
+let DivideLine = ({ onClick }) => {
   return (
     <button className="fs-editor-toolbar-button" onClick={onClick}>
-      <i className="iconfont icon-zhankai fs-editor-fill"
-      style={{fontSize: '14px'}}></i>
+      <i
+        className="iconfont icon-zhankai fs-editor-fill"
+        style={{ fontSize: '14px' }}
+      />
     </button>
   )
 }
