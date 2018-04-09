@@ -40,8 +40,12 @@ class DataConvert extends Component {
         <FsEditor
           value={this.state.editorState}
           imageMIME={['image/png', 'image/jpeg', 'image/gif']}
-          onImageInsert={(file, base64, insertImage) => {
-            insertImage(base64)
+          onImageInsert={(file, base64) => {
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve({ success: true, result: base64 })
+              }, 2000)
+            })
           }}
           onImagePaste={url => {
             return new Promise(resolve => {

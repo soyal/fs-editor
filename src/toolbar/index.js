@@ -20,7 +20,6 @@ import './index.css'
 let Toolbar = ({
   toggleInlineStyle, // 变更内联样式
   toggleBlockType, // 变更块级样式
-  insertMediaBlock, // 插入自定义块
   editorState,
   onChange,
   insertCustomBlock
@@ -66,7 +65,7 @@ let Toolbar = ({
       </div>
 
       <div className="fs-editor-toolbar-group">
-        <Image insertMediaBlock={insertMediaBlock} />
+        <Image />
         {/*
         <Video insertMediaBlock={insertMediaBlock}></Video>
         <Audio insertMediaBlock={insertMediaBlock}></Audio>
