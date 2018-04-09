@@ -50,7 +50,7 @@ class DataConvert extends Component {
                   result: 'http://via.placeholder.com/350x150',
                   success: false
                 })
-              }, 1000)
+              }, 2000)
             })
           }}
           onChange={value => {

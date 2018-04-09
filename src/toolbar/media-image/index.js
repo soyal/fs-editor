@@ -39,21 +39,23 @@ class Image extends Component {
   }
 
   onFileChange(e) {
-    const file = e.target.files[0]
+    const files = Array.prototype.slice.call(e.target.files)
     const mimeArr = this.context.imageMIME || MIME
     const limitSize = this.context.imageSizeLimit || LIMIT_SIZE
 
-    uploadImage(
-      file,
-      this.context.onImageInsert,
-      url => {
-        this.props.insertMediaBlock('image', url)
-      },
-      {
-        imageMIME: mimeArr,
-        imageSizeLimit: limitSize
-      }
-    )
+    files.forEach(file => {
+      uploadImage(
+        file,
+        this.context.onImageInsert,
+        url => {
+          this.props.insertMediaBlock('image', url)
+        },
+        {
+          imageMIME: mimeArr,
+          imageSizeLimit: limitSize
+        }
+      )
+    })
   }
 
   render() {
@@ -67,6 +69,7 @@ class Image extends Component {
           ref={dom => {
             this.fileInput = dom
           }}
+          multiple
           accept={imageMIME.join(',')}
           key={Math.random()}
           onChange={this.onFileChange.bind(this)}
