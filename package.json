@@ -1,6 +1,6 @@
 {
   "name": "fs-editor",
-  "version": "2.4.0",
+  "version": "3.0.0",
   "description": "An editor with draft-js",
   "main": "dist/fs-editor.js",
   "scripts": {
