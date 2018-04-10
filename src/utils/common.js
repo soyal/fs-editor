@@ -7,7 +7,7 @@ export const isImage = file => {
   const suffix = ['png', 'jpg', 'jpeg', 'gif']
 
   return suffix.some(_s => {
-    const pattern = new RegExp(_s + '$')
+    const pattern = new RegExp(_s + '$', 'i')
 
     return pattern.test(file.name)
   })

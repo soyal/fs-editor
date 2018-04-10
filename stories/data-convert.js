@@ -41,11 +41,12 @@ class DataConvert extends Component {
           value={this.state.editorState}
           imageMIME={['image/png', 'image/jpeg', 'image/gif']}
           onImageInsert={(file, base64) => {
-            return new Promise(resolve => {
-              setTimeout(() => {
-                resolve({ success: true, result: base64 })
-              }, 2000)
-            })
+            return { success: true, result: base64 }
+            // return new Promise(resolve => {
+            //   setTimeout(() => {
+            //     resolve({ success: true, result: base64 })
+            //   }, 2000)
+            // })
           }}
           onImagePaste={url => {
             return new Promise(resolve => {

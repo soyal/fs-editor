@@ -25,6 +25,10 @@ export default (files, { getEditorState, setEditorState, onImageInsert, option }
     eState = data1.editorState
   })
 
+  if(!eState) return
+
+  setEditorState(eState)
+
   const allPro = promises.map(item => {
     return item.promise
   })
@@ -50,7 +54,5 @@ export default (files, { getEditorState, setEditorState, onImageInsert, option }
     _nState = RichUtils.insertSoftNewline(_nState)
     setEditorState(_nState)
   })
-
-  setEditorState(eState)
 }
 

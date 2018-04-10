@@ -35,18 +35,18 @@ class Demo extends Component {
 * className: 类名，会加到container
 * height: 编辑区域高度，会直接放到style.height上面，default: 300px
 * value: EditorState, 用于赋值
-* autoFocus: Boolean, 是否自动定焦到editor, default: false
+* autoFocus: Boolean, 是否在组件安装后自动定焦到editor, default: false
 * onChange: Function, (editorState) => {},回传editorState
 * imageSizeLimit: 图片大小限制，单位是Byte，如10M = 1024 * 1024 *10，默认为10M
 * imageMIME: 图片支持的类型， default:['image/png', 'image/jpeg']
 * onImagePaste: Function, 在图文混合粘贴时触发
-* `*`onImageInsert: Function, 必传，图片插入时触发
+* onImageInsert: Function, 图片插入时触发
 
 ## 图片处理
-### onImageInsert: (file:File, base64:string, insertImage: function): void
+### onImageInsert: (file:File, base64:string): Promise
 * file: file类型，被插入图片的file数据 
 * base64: string, 被插入图片的base64编码
-* insertImage: function, (url: string): void，插入图片的方法，参数为图片url
+* return: Promise, 需要将处理结果通过resolve(data)返回给editor，data格式为{success: boolean, result: 处理后的图片url}，如果success: false，将显示上传错误的图片
 
 该回调会在`单图粘贴`或`点击工具栏`进行图片插入时触发  
 ```javascript
@@ -54,10 +54,10 @@ class Demo extends Component {
   render() {
     return (
       <div>
-        <FsEditor onImageInsert={(file, base64, insertImage) => {
-          const url = doUpload(file)
-          // 通过file上传图片获取url
-          insertImage(url)
+        <FsEditor onImageInsert={async (file, base64) => {
+          // 上传图片
+          const url = await doUpload(file)
+          return { success: true, result: url }
         }}></FsEditor>
       </div>
     )
@@ -66,7 +66,7 @@ class Demo extends Component {
 ```
 ### onImagePaste: (url: string): Promise
 * url: string, 被贴入的图片的url
-* return: Promise, 需要将处理结果通过resolve(data)返回给editor，data格式为{success: boolean, result: 处理后的图片url}
+* return: Promise, 需要将处理结果通过resolve(data)返回给editor，data格式为{success: boolean, result: 处理后的图片url}，如果success: false，将显示上传错误的图片
 
 该回调会在`图文混合粘贴`的时候触发，如果不传出此参数，则editor不会处理图文混合粘贴的情况
 ```javascript
@@ -76,16 +76,14 @@ class Demo extends Component {
       <div>
         <FsEditor
           //...
-          onImagePaste={url => {
-            return new Promise(resolve => {
-              setTimeout(() => {
-                resolve({
-                  result: '//image-cdn.fishsaying.com/29b95c6cf1b04c9d9932093c6bd6544f.jpg@310w_240h',
-                  success: true
-                })
-              }, 1000)
-            })
-          }}
+          onImagePaste={async url => {
+            // 对url作处理
+            const uploadedUrl = await doUpload(url)  
+            return {
+              success: true,
+              result: uploadedUrl
+            }
+          }
         />
       </div>
     )

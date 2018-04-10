@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Editor from 'draft-js-plugins-editor'
-import { EditorState, RichUtils, AtomicBlockUtils } from 'draft-js'
+import { EditorState, RichUtils } from 'draft-js'
 import createPlugins from './plugins'
 import * as utils from './utils'
 import pasteHandler from './lib/paste-handler'
@@ -86,7 +86,6 @@ class FsEditor extends React.Component {
     this.toggleInlineStyle = this._toggleInlineStyle.bind(this)
     this.toggleBlockType = this._toggleBlockType.bind(this)
     this.handleKeyCommand = this._handleKeyCommand.bind(this)
-    this.insertMediaBlock = this._insertMediaBlock.bind(this)
     this.handlePastedText = this.handlePastedText.bind(this)
     this.onChange = this.onChange.bind(this)
   }
@@ -179,38 +178,6 @@ class FsEditor extends React.Component {
     )
   }
 
-  /**
-   * 插入媒体区块
-   * @param type String image, audio, video
-   * @param url String
-   */
-  _insertMediaBlock(type, url) {
-    const editorState = this.state.editorState
-    const contentState = editorState.getCurrentContent()
-    const contentStateWithEntity = contentState.createEntity(
-      type,
-      'IMMUTABLE',
-      {
-        src: url
-      }
-    )
-    const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
-    const newEditorState = EditorState.set(editorState, {
-      currentContent: contentStateWithEntity
-    })
-
-    const newState = AtomicBlockUtils.insertAtomicBlock(
-      newEditorState,
-      entityKey,
-      ' '
-    )
-
-    this.setState({
-      editorState: newState
-    })
-    this.onChange(newState, this._focus.bind(this))
-  }
-
   _toggleInlineStyle(type) {
     const newState = RichUtils.toggleInlineStyle(this.state.editorState, type)
 
@@ -267,7 +234,6 @@ class FsEditor extends React.Component {
         <Toolbar
           toggleInlineStyle={this.toggleInlineStyle}
           toggleBlockType={this.toggleBlockType}
-          insertMediaBlock={this.insertMediaBlock}
           insertCustomBlock={this._insertCustomBlock.bind(this)}
           editorState={this.state.editorState}
           onChange={this.onChange}
