@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import unionClassNames from 'union-class-names'
+import classnames from 'classnames'
 import linkifyIt from 'linkify-it'
 import tlds from 'tlds'
 
@@ -25,7 +25,7 @@ export default class Link extends Component {
       ...otherProps
     } = this.props
 
-    const combinedClassName = unionClassNames(theme.link, className)
+    const combinedClassName = classnames(theme.link, className)
     const links = linkify.match(decoratedText)// eslint-disable-line no-unused-vars
     const href = contentState.getEntity(entityKey).getData().url
     const props = {
