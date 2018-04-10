@@ -10,9 +10,9 @@ import { convertFromHTML } from 'draft-convert'
  */
 export const convertFromHtml = html => {
   const contentState = convertFromHTML({
-    htmlToEntity: (nodeName, node) => {
+    htmlToEntity: (nodeName, node, createEntity) => {
       if (nodeName === 'img') {
-        return Entity.create('image', 'MUTABLE', {
+        return createEntity('image', 'MUTABLE', {
           src: node.getAttribute('src')
         })
       }

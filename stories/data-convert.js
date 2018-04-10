@@ -40,8 +40,13 @@ class DataConvert extends Component {
         <FsEditor
           value={this.state.editorState}
           imageMIME={['image/png', 'image/jpeg', 'image/gif']}
-          onImageInsert={(file, base64, insertImage) => {
-            insertImage(base64)
+          onImageInsert={(file, base64) => {
+            return { success: true, result: base64 }
+            // return new Promise(resolve => {
+            //   setTimeout(() => {
+            //     resolve({ success: true, result: base64 })
+            //   }, 2000)
+            // })
           }}
           onImagePaste={url => {
             return new Promise(resolve => {
@@ -50,7 +55,7 @@ class DataConvert extends Component {
                   result: 'http://via.placeholder.com/350x150',
                   success: false
                 })
-              }, 1000)
+              }, 2000)
             })
           }}
           onChange={value => {

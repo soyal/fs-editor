@@ -3,7 +3,7 @@ import { insertContent, mergeEntityDatas, handleOnImagePaste } from './utils'
 import { EditorState, RichUtils } from 'draft-js'
 
 /**
- * 处理粘贴事件
+ * 处理粘贴文本事件
  * @param {EditorState} editorState 粘贴前的editorState
  */
 export default (

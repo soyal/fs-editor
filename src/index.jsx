@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Editor from 'draft-js-plugins-editor'
-import { EditorState, RichUtils, AtomicBlockUtils } from 'draft-js'
+import { EditorState, RichUtils } from 'draft-js'
 import createPlugins from './plugins'
 import * as utils from './utils'
-import uploadImage from './utils/upload/upload-image'
-import { isImage } from './utils/common'
 import pasteHandler from './lib/paste-handler'
+import insertImages from './lib/insert-images'
 import config from 'config.js'
 
 import Toolbar from './toolbar'
@@ -33,12 +32,7 @@ class FsEditor extends React.Component {
     onChange: PropTypes.func, // (editorState) => {} 回传editorState
     value: PropTypes.object, // EditorState
     autoFocus: PropTypes.bool, // 组件加载后自动定焦到editor
-    /**
-     * 当图片被插入的时候触发
-     * @param {String} base64 被插入图片的base64编码
-     * @param {Function} insertImage 插入图片的方法, 传参为要插入的图片的url
-     */
-    onImageInsert: PropTypes.func.isRequired, // 插入图片的回调，(file, base64, insertImage(url))
+    onImageInsert: PropTypes.func, // 插入图片的回调，(file, base64) => Promise resolve({success:true, result:url})
     errorImage: PropTypes.string, // onImagePaste中返回succss:false后，显示的图片
     loadingImage: PropTypes.string, // onImagePaste处理中，loading的图片
     // 图文混合粘贴时候，对图片的处理(url:string): Promise, url为粘贴的图片的url
@@ -53,6 +47,9 @@ class FsEditor extends React.Component {
     autoFocus: false,
     errorImage: config.errorImage,
     loadingImage: config.loadingImage,
+    onImageInsert: (file, base64) => {
+      return base64
+    },
     onImagePaste: url => {
       return {
         result: url,
@@ -65,6 +62,7 @@ class FsEditor extends React.Component {
     onImageInsert: PropTypes.func,
     onImagePaste: PropTypes.func,
     onChange: PropTypes.func,
+    getEditorState: PropTypes.func,
     imageSizeLimit: PropTypes.number,
     imageMIME: PropTypes.array
   }
@@ -88,7 +86,6 @@ class FsEditor extends React.Component {
     this.toggleInlineStyle = this._toggleInlineStyle.bind(this)
     this.toggleBlockType = this._toggleBlockType.bind(this)
     this.handleKeyCommand = this._handleKeyCommand.bind(this)
-    this.insertMediaBlock = this._insertMediaBlock.bind(this)
     this.handlePastedText = this.handlePastedText.bind(this)
     this.onChange = this.onChange.bind(this)
   }
@@ -98,6 +95,7 @@ class FsEditor extends React.Component {
       onImageInsert: this.props.onImageInsert,
       onImagePaste: this.props.onImagePaste,
       onChange: this.onChange.bind(this),
+      getEditorState: this.getEditorState,
       imageSizeLimit: this.props.imageSizeLimit,
       imageMIME: this.props.imageMIME
     }
@@ -180,38 +178,6 @@ class FsEditor extends React.Component {
     )
   }
 
-  /**
-   * 插入媒体区块
-   * @param type String image, audio, video
-   * @param url String
-   */
-  _insertMediaBlock(type, url) {
-    const editorState = this.state.editorState
-    const contentState = editorState.getCurrentContent()
-    const contentStateWithEntity = contentState.createEntity(
-      type,
-      'IMMUTABLE',
-      {
-        src: url
-      }
-    )
-    const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
-    const newEditorState = EditorState.set(editorState, {
-      currentContent: contentStateWithEntity
-    })
-
-    const newState = AtomicBlockUtils.insertAtomicBlock(
-      newEditorState,
-      entityKey,
-      ' '
-    )
-
-    this.setState({
-      editorState: newState
-    })
-    this.onChange(newState, this._focus.bind(this))
-  }
-
   _toggleInlineStyle(type) {
     const newState = RichUtils.toggleInlineStyle(this.state.editorState, type)
 
@@ -229,7 +195,7 @@ class FsEditor extends React.Component {
   }
 
   handlePastedText(text, html, editorState) {
-    if(!html) return
+    if (!html) return
 
     pasteHandler(text, html, {
       setEditorState: this.onChange,
@@ -243,11 +209,13 @@ class FsEditor extends React.Component {
   }
 
   onFilePasted = files => {
-    files.forEach(file => {
-      if (isImage(file)) {
-        uploadImage(file, this.props.onImageInsert, url => {
-          this.insertMediaBlock('image', url)
-        })
+    insertImages(files, {
+      setEditorState: this.onChange,
+      getEditorState: this.getEditorState,
+      onImageInsert: this.props.onImageInsert,
+      option: {
+        mimeArr: this.props.mimeArr,
+        limitSize: this.props.limitSize
       }
     })
 
@@ -266,7 +234,6 @@ class FsEditor extends React.Component {
         <Toolbar
           toggleInlineStyle={this.toggleInlineStyle}
           toggleBlockType={this.toggleBlockType}
-          insertMediaBlock={this.insertMediaBlock}
           insertCustomBlock={this._insertCustomBlock.bind(this)}
           editorState={this.state.editorState}
           onChange={this.onChange}

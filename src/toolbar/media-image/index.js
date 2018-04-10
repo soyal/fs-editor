@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import uploadImage from '../../utils/upload/upload-image'
+// import uploadImage from '../../utils/upload/upload-image'
+import insertImages from 'lib/insert-images'
 // import Modal from './modal'
 
 import './image.css'
@@ -14,6 +15,8 @@ const LIMIT_SIZE = 1024 * 1024 * 10 // 10M
 class Image extends Component {
   static contextTypes = {
     onImageInsert: PropTypes.func,
+    onChange: PropTypes.func,
+    getEditorState: PropTypes.func,
     imageSizeLimit: PropTypes.number,
     imageMIME: PropTypes.array
   }
@@ -39,21 +42,24 @@ class Image extends Component {
   }
 
   onFileChange(e) {
-    const file = e.target.files[0]
+    const files = e.target.files
     const mimeArr = this.context.imageMIME || MIME
     const limitSize = this.context.imageSizeLimit || LIMIT_SIZE
 
-    uploadImage(
-      file,
-      this.context.onImageInsert,
-      url => {
-        this.props.insertMediaBlock('image', url)
-      },
-      {
-        imageMIME: mimeArr,
-        imageSizeLimit: limitSize
+    const {
+      onChange: setEditorState,
+      getEditorState,
+      onImageInsert
+    } = this.context
+    insertImages(files, {
+      setEditorState,
+      getEditorState,
+      onImageInsert,
+      option: {
+        mimeArr,
+        limitSize
       }
-    )
+    })
   }
 
   render() {
@@ -67,6 +73,7 @@ class Image extends Component {
           ref={dom => {
             this.fileInput = dom
           }}
+          multiple
           accept={imageMIME.join(',')}
           key={Math.random()}
           onChange={this.onFileChange.bind(this)}
