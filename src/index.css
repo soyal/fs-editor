@@ -15,6 +15,12 @@
 .fs-editor-container figure {
   margin: 0;
 }
+.fs-editor-container blockquote {
+  margin: 0;
+  border-left: 4px solid #e2e3e4;
+  color: #999;
+  padding-left: 1.2em;
+}
 .fs-editor-container img {
   display: block;
   max-width: 100%;
