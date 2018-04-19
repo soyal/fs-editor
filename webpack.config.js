@@ -6,7 +6,7 @@ module.exports = {
   entry: './src/index.jsx',
   output: {
     filename: 'fs-editor.js',
-    publicPath: '/dist/',
+    publicPath: './',
     path: path.resolve(__dirname, 'dist'),
     library: 'fs-editor',
     libraryTarget: 'umd'
