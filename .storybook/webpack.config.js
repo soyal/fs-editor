@@ -4,19 +4,31 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|jpg|gif)$/,
-        use: [
+        oneOf: [
           {
-            loader: 'url-loader',
+            test: /\.(png|jpg|gif)$/,
+            use: [
+              {
+                loader: 'url-loader',
+                options: {
+                  limit: 8192
+                }
+              }
+            ]
+          },
+          {
+            test: /\.(css|less)$/,
+            use: ['style-loader', 'css-loader', 'less-loader']
+          },
+          {
+            test: /\.svg$/,
+            exclude: [/\.js$/, /\.html$/, /\.json$/],
+            loader: require.resolve('file-loader'),
             options: {
-              limit: 8192
+              name: 'assets/[name].[hash:4].[ext]'
             }
           }
         ]
-      },
-      {
-        test: /\.(css|less)$/,
-        use: ['style-loader', 'css-loader', 'less-loader']
       }
     ]
   },

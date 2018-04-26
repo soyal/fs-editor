@@ -12,6 +12,8 @@ import OlList from './ol-list'
 
 import Image from './media-image'
 import Link from './link'
+
+import Blockquote from './blockquote'
 // import Video from './video'
 // import Audio from './audio'
 
@@ -38,6 +40,13 @@ let Toolbar = ({
         <Bold
           onClick={() => {
             toggleInlineStyle('BOLD')
+          }}
+        />
+
+        {/* 引号 */}
+        <Blockquote
+          onClick={() => {
+            toggleBlockType('blockquote')
           }}
         />
 

@@ -51,3 +51,9 @@
 .fs-editor-even {
   fill-rule: evenodd;
 }
+
+.fs-editor_btn-quote {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+}
