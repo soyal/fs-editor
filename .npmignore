@@ -8,7 +8,7 @@ src/
 .eslintignore
 .eslintrc.json
 .gitignore
-.prettier.json
+.prettierrc.json
 .version.md
-.webpack.config.js
+webpack.config.js
 yarn.lock
