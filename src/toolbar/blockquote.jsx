@@ -5,13 +5,16 @@ import React from 'react'
 
 const Quote = ({ onClick }) => {
   return (
-    <button className="fs-editor-toolbar-button">
-      <img
-        onClick={onClick}
-        className="fs-editor_btn-quote"
-        src={require('./images/quote.svg')}
-        alt="quote"
-      />
+    <button className="fs-editor-toolbar-button" onClick={onClick}>
+      <svg viewBox="0 0 1024 1024">
+        <defs>
+          <style type="text/css" />
+        </defs>
+        <path
+          className="fs-editor-fill"
+          d="M505.6 204.8c0 12.8-12.8 25.6-44.8 44.8C307.2 364.8 236.8 454.4 236.8 524.8c0 38.4 25.6 70.4 70.4 83.2 70.4 25.6 96 70.4 96 115.2 0 38.4-19.2 134.4-134.4 134.4-89.6 0-204.8-64-204.8-217.6C64 486.4 211.2 320 416 172.8 428.8 160 441.6 160 448 160c12.8 0 25.6 6.4 38.4 19.2C499.2 192 505.6 198.4 505.6 204.8zM960 204.8c0 12.8-12.8 25.6-44.8 44.8-153.6 108.8-224 204.8-224 275.2 0 38.4 25.6 70.4 70.4 83.2 70.4 25.6 96 70.4 96 115.2 0 38.4-19.2 134.4-134.4 134.4-89.6 0-204.8-64-204.8-217.6 0-160 147.2-326.4 352-473.6 12.8-12.8 25.6-12.8 38.4-12.8C928 160 960 192 960 204.8z"
+        />
+      </svg>
     </button>
   )
 }

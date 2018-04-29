@@ -10,7 +10,7 @@ import config from 'config.js'
 
 import Toolbar from './toolbar'
 
-import './index.css'
+import './index.less'
 
 // 隐藏warning:A component is `contentEditable` and contains `children` managed by React. It is now your responsibility to guarantee that none of those nodes are unexpectedly modified or duplicated. This is probably not intentional.
 const _errFunc = console.error
@@ -141,8 +141,8 @@ class FsEditor extends React.Component {
   /**
    * 将焦点设置到编辑器上
    */
-  _focus() {
-    this.refs.editor.focus()
+  _focus = () => {
+    this.editor.focus()
   }
 
   _handleKeyCommand(command) {
@@ -241,6 +241,7 @@ class FsEditor extends React.Component {
 
         <div
           className="fs-editor-content"
+          onClick={this._focus}
           style={{
             height: this.props.height || '300px'
           }}
@@ -252,7 +253,9 @@ class FsEditor extends React.Component {
             onChange={this.onChange}
             handlePastedFiles={this.onFilePasted}
             handlePastedText={this.handlePastedText}
-            ref="editor"
+            ref={editor => {
+              this.editor = editor
+            }}
           />
         </div>
       </div>
