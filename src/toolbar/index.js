@@ -17,7 +17,7 @@ import Blockquote from './blockquote'
 // import Video from './video'
 // import Audio from './audio'
 
-import './index.css'
+import './index.less'
 
 let Toolbar = ({
   toggleInlineStyle, // 变更内联样式

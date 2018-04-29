@@ -1,6 +1,6 @@
 {
   "name": "fs-editor",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "An editor with draft-js",
   "main": "dist/fs-editor.js",
   "scripts": {
@@ -19,12 +19,10 @@
     "decorate-component-with-props": "^1.1.0",
     "draft-convert": "^2.0.1",
     "draft-js": "0.10.5",
-    "draft-js-drag-n-drop-plugin": "^2.0.3",
     "draft-js-export-html": "^1.2.0",
     "draft-js-focus-plugin": "^2.0.1",
     "draft-js-image-plugin": "^2.0.1",
     "draft-js-plugins-editor": "^2.0.4",
-    "draft-js-resizeable-plugin": "^2.0.6",
     "draftjs-utils": "^0.9.3",
     "linkify-it": "^2.0.3",
     "noty": "^3.1.3",

@@ -4,16 +4,7 @@
 import React from 'react'
 
 const Quote = ({ onClick }) => {
-  return (
-    <button className="fs-editor-toolbar-button">
-      <img
-        onClick={onClick}
-        className="fs-editor_btn-quote"
-        src={require('./images/quote.svg')}
-        alt="quote"
-      />
-    </button>
-  )
+  return <button className="fs-editor-toolbar-button blockquote" />
 }
 
 export default Quote
