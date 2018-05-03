@@ -13,17 +13,17 @@ import Toolbar from './toolbar'
 import './index.less'
 
 // 隐藏warning:A component is `contentEditable` and contains `children` managed by React. It is now your responsibility to guarantee that none of those nodes are unexpectedly modified or duplicated. This is probably not intentional.
-const _errFunc = console.error
-console.error = function(msg) {
-  if (
-    msg.indexOf(
-      `A component is \`contentEditable\` and contains \`children\` managed by React`
-    ) > -1
-  ) {
-    return
-  }
-  _errFunc(msg)
-}
+// const _errFunc = console.error
+// console.error = function(msg) {
+//   if (
+//     msg.indexOf(
+//       `A component is \`contentEditable\` and contains \`children\` managed by React`
+//     ) > -1
+//   ) {
+//     return
+//   }
+//   _errFunc(msg)
+// }
 
 class FsEditor extends React.Component {
   static propTypes = {

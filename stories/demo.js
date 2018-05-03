@@ -14,7 +14,7 @@ const Basic = () => {
         height="600px"
         imageMIME={['image/png', 'image/jpeg', 'image/gif']}
         onImageInsert={(file, base64, insertImage) => {
-          insertImage(base64)
+          return { success: true, result: base64 }
         }}
         onChange={() => {
           console.log('change')
