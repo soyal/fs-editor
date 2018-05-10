@@ -1,6 +1,5 @@
-import { convertFromHTML, ContentState, EditorState } from 'draft-js'
-
-// import { convertFromHTML } from 'draft-convert'
+import { EditorState } from 'draft-js'
+import { convertFromHTML } from 'draft-convert'
 
 /**
  * 用于将后端传过来的html转换成editorState
@@ -8,34 +7,25 @@ import { convertFromHTML, ContentState, EditorState } from 'draft-js'
  * @param String html html字符串
  * @return Object editorState draft-js的editorState
  */
-export const convertFromHtml = html => {
-  const blocksFromHTML = convertFromHTML(html)
-  const state = ContentState.createFromBlockArray(
-    blocksFromHTML.contentBlocks,
-    blocksFromHTML.entityMap
-  )
+export const convertFromHtml = htmlStr => {
+  const contentState = convertFromHTML({
+    htmlToEntity: (nodeName, node, createEntity) => {
+      if (nodeName === 'img') {
+        return createEntity('image', 'MUTABLE', {
+          src: node.getAttribute('src')
+        })
+      }
+    },
 
-  return EditorState.createWithContent(state)
+    htmlToBlock: (nodeName, node) => {
+      if (nodeName === 'img') {
+        return {
+          type: 'atomic',
+          data: {}
+        }
+      }
+    }
+  })(htmlStr)
+
+  return EditorState.createWithContent(contentState)
 }
-// export const convertFromHtml = html => {
-//   const contentState = convertFromHTML({
-//     htmlToEntity: (nodeName, node, createEntity) => {
-//       if (nodeName === 'img') {
-//         return createEntity('image', 'MUTABLE', {
-//           src: node.getAttribute('src')
-//         })
-//       }
-//     },
-
-//     htmlToBlock: (nodeName, node) => {
-//       if (nodeName === 'img') {
-//         return {
-//           type: 'atomic',
-//           data: {}
-//         }
-//       }
-//     }
-//   })(html)
-
-//   return EditorState.createWithContent(contentState)
-// }
