@@ -1,9 +1,8 @@
-import createImagePlugin from './image-paste-handler'
+import createImagePlugin from './image-plugin'
 import { composeDecorators } from 'draft-js-plugins-editor'
 import createFocusPlugin from 'draft-js-focus-plugin'
 import 'draft-js-focus-plugin/lib/plugin.css'
 import createLinkifyPlugin from './link'
-// import createLinkifyPlugin from 'draft-js-linkify-plugin';
 
 export default () => {
   const focusPlugin = createFocusPlugin()

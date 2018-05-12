@@ -3,7 +3,8 @@ import { convertFromRaw, EditorState } from 'draft-js'
 
 import Editor, { composeDecorators } from 'draft-js-plugins-editor'
 
-import createImagePlugin from 'draft-js-image-plugin'
+// import createImagePlugin from 'draft-js-image-plugin'
+import createImagePlugin from '../../src/plugins/image-plugin'
 import 'draft-js-focus-plugin/lib/plugin.css'
 
 import createFocusPlugin from 'draft-js-focus-plugin'
@@ -95,6 +96,7 @@ export default class CustomImageEditor extends Component {
   }
 
   onChange = editorState => {
+    console.log('plugin onchange')
     this.setState({
       editorState
     })
