@@ -1,5 +1,4 @@
-import { EditorState, Entity } from 'draft-js'
-
+import { EditorState } from 'draft-js'
 import { convertFromHTML } from 'draft-convert'
 
 /**
@@ -8,7 +7,7 @@ import { convertFromHTML } from 'draft-convert'
  * @param String html html字符串
  * @return Object editorState draft-js的editorState
  */
-export const convertFromHtml = html => {
+export const convertFromHtml = htmlStr => {
   const contentState = convertFromHTML({
     htmlToEntity: (nodeName, node, createEntity) => {
       if (nodeName === 'img') {
@@ -26,7 +25,7 @@ export const convertFromHtml = html => {
         }
       }
     }
-  })(html)
+  })(htmlStr)
 
   return EditorState.createWithContent(contentState)
 }
