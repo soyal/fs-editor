@@ -3,12 +3,7 @@ import classnames from 'classnames'
 
 export default class Image extends Component {
   render() {
-    const {
-      block,
-      className,
-      theme = {},
-      ...otherProps
-    } = this.props;
+    const { block, className, theme = {}, ...otherProps } = this.props
     // leveraging destructuring to omit certain properties from props
     const {
       blockProps, // eslint-disable-line no-unused-vars
@@ -22,9 +17,9 @@ export default class Image extends Component {
       contentState,
       blockStyleFn, // eslint-disable-line no-unused-vars
       ...elementProps
-    } = otherProps;
-    const combinedClassName = classnames(theme.image, className);
-    const { src } = contentState.getEntity(block.getEntityAt(0)).getData();
+    } = otherProps
+    const combinedClassName = classnames(theme.image, className)
+    const { src } = contentState.getEntity(block.getEntityAt(0)).getData()
     return (
       <img
         {...elementProps}
@@ -32,7 +27,6 @@ export default class Image extends Component {
         role="presentation"
         className={combinedClassName}
       />
-    );
+    )
   }
 }
-
