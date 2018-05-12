@@ -96,7 +96,6 @@ export default class CustomImageEditor extends Component {
   }
 
   onChange = editorState => {
-    console.log('plugin onchange')
     this.setState({
       editorState
     })

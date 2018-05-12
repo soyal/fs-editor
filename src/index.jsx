@@ -12,6 +12,8 @@ import Toolbar from './toolbar'
 
 import './index.less'
 
+const plugins = createPlugins()
+
 // 隐藏warning:A component is `contentEditable` and contains `children` managed by React. It is now your responsibility to guarantee that none of those nodes are unexpectedly modified or duplicated. This is probably not intentional.
 // const _errFunc = console.error
 // console.error = function(msg) {
@@ -249,7 +251,7 @@ class FsEditor extends React.Component {
           <Editor
             editorState={this.state.editorState}
             handleKeyCommand={this.handleKeyCommand}
-            plugins={createPlugins()}
+            plugins={plugins}
             onChange={this.onChange}
             handlePastedFiles={this.onFilePasted}
             handlePastedText={this.handlePastedText}
