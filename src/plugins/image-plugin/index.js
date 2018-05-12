@@ -22,7 +22,7 @@ export default (config = {}) => {
         if (type === 'image') {
           return {
             component: ThemedImage,
-            editable: false
+            editable: true
           }
         }
         return null

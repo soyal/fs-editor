@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classnames from 'classnames'
+import { EditorBlock } from 'draft-js'
 
 export default class Image extends Component {
   render() {
@@ -20,13 +21,19 @@ export default class Image extends Component {
     } = otherProps
     const combinedClassName = classnames(theme.image, className)
     const { src } = contentState.getEntity(block.getEntityAt(0)).getData()
+    console.log(this.props)
     return (
-      <img
-        {...elementProps}
-        src={src}
-        role="presentation"
-        className={combinedClassName}
-      />
+      <div>
+        <img
+          {...elementProps}
+          src={src}
+          role="presentation"
+          className={combinedClassName}
+        />
+        <figcaption>
+          <EditorBlock {...this.props} />
+        </figcaption>
+      </div>
     )
   }
 }

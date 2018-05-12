@@ -6,12 +6,11 @@ import createLinkifyPlugin from './link'
 
 export default () => {
   const focusPlugin = createFocusPlugin()
-  // const linkPlugin = createLinkPlugin();
   const linkPlugin = createLinkifyPlugin()
   const decorator = composeDecorators(focusPlugin.decorator)
   const imgPastePlugin = createImagePlugin({
     decorator
   })
-  // return [linkPlugin]
+  
   return [focusPlugin, imgPastePlugin, linkPlugin]
 }
