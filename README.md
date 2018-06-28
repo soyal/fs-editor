@@ -41,6 +41,7 @@ class Demo extends Component {
 * imageMIME: 图片支持的类型， default:['image/png', 'image/jpeg']
 * onImagePaste: Function, 在图文混合粘贴时触发
 * onImageInsert: Function, 图片插入时触发
+* toolbar: Boolean, 是否显示工具栏
 
 ## 图片处理
 ### onImageInsert: (file:File, base64:string): Promise
