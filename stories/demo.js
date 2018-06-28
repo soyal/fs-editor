@@ -12,6 +12,7 @@ const Basic = () => {
       <h2>基础</h2>
       <FsEditor
         height="600px"
+        toolbar={false}
         imageMIME={['image/png', 'image/jpeg', 'image/gif']}
         onImageInsert={(file, base64, insertImage) => {
           return { success: true, result: base64 }

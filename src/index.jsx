@@ -42,13 +42,15 @@ class FsEditor extends React.Component {
     // 注意：如果粘贴的是本域名下的(e.g:image-cdn.fishsaying.com)图片，则不触发此回调，直接完成粘贴
     onImagePaste: PropTypes.func,
     imageSizeLimit: PropTypes.number, // 图片大小限制，默认是10M，单位是Byte，如10M = 1024 * 1024 * 10
-    imageMIME: PropTypes.array // 图片支持的类型，默认['image/png', 'image/jpeg']
+    imageMIME: PropTypes.array, // 图片支持的类型，默认['image/png', 'image/jpeg']
+    toolbar: PropTypes.bool // 是否显示工具栏
   }
 
   static defaultProps = {
     autoFocus: false,
     errorImage: config.errorImage,
     loadingImage: config.loadingImage,
+    toolbar: true,
     onImageInsert: (file, base64) => {
       return base64
     },
@@ -231,15 +233,19 @@ class FsEditor extends React.Component {
   }
 
   render() {
+    const { toolbar } = this.props
+
     return (
       <div className={'fs-editor-container ' + (this.props.className || '')}>
-        <Toolbar
-          toggleInlineStyle={this.toggleInlineStyle}
-          toggleBlockType={this.toggleBlockType}
-          insertCustomBlock={this._insertCustomBlock.bind(this)}
-          editorState={this.state.editorState}
-          onChange={this.onChange}
-        />
+        {toolbar ? (
+          <Toolbar
+            toggleInlineStyle={this.toggleInlineStyle}
+            toggleBlockType={this.toggleBlockType}
+            insertCustomBlock={this._insertCustomBlock.bind(this)}
+            editorState={this.state.editorState}
+            onChange={this.onChange}
+          />
+        ) : null}
 
         <div
           className="fs-editor-content"
